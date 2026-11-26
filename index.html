@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>简历</title>
+  <style>
+    :root {
+      --ink: #1a1a1a;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --bg: #f6f7f9;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+    .page {
+      max-width: 760px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 48px 56px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.06);
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 32px;
+      font-weight: 650;
+      letter-spacing: .04em;
+    }
+    .meta {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+    h2 {
+      font-size: 15px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #374151;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 8px;
+      margin: 28px 0 12px;
+    }
+    p, li { color: #374151; }
+    .empty { color: #9ca3af; }
+    @media (max-width: 640px) {
+      .page { margin: 0; padding: 32px 22px; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <h1>姓名</h1>
+    <p class="meta">职位意向 · 城市 · 联系方式</p>
+
+    <h2>简介</h2>
+    <p class="empty">在这里写一段简短介绍。</p>
+
+    <h2>经历</h2>
+    <p class="empty">公司 / 时间 / 职责（待填写）</p>
+
+    <h2>项目</h2>
+    <p class="empty">项目名称与成果（待填写）</p>
+
+    <h2>技能</h2>
+    <p class="empty">技能列表（待填写）</p>
+  </main>
+</body>
+</html>
