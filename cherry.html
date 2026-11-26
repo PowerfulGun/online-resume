@@ -295,6 +295,69 @@
     </section>
 
     <section>
+      <h2 id="compact">上下文怎么压</h2>
+      <p>历史不会一直原样堆着。新一轮开口前会估一次；轮内工具转多了也会再估。没超过软阈值就不动。压的时候用小模型做摘要，不计用户积分。路径、编号原样留下，不改写成大概。</p>
+      <figure class="diagram">
+        <svg viewBox="0 0 720 430" role="img" aria-labelledby="cmp-title">
+          <title id="cmp-title">会话历史超过阈值后的压缩</title>
+          <defs>
+            <marker id="arr-c" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#b4532a" />
+            </marker>
+          </defs>
+          <rect class="box" x="24" y="20" width="300" height="56" rx="6" />
+          <text class="title" x="174" y="44" text-anchor="middle">新一轮开始</text>
+          <text class="sub" x="174" y="62" text-anchor="middle">上一轮先封进摘要</text>
+          <rect class="box" x="396" y="20" width="300" height="56" rx="6" />
+          <text class="title" x="546" y="44" text-anchor="middle">轮内工具转了几圈</text>
+          <text class="sub" x="546" y="62" text-anchor="middle">或已经顶到软阈值</text>
+          <line class="arrow" x1="174" y1="76" x2="174" y2="104" />
+          <line class="arrow" x1="546" y1="76" x2="546" y2="104" />
+          <line class="arrow" x1="174" y1="104" x2="546" y2="104" />
+          <line class="arrow" x1="360" y1="104" x2="360" y2="128" marker-end="url(#arr-c)" />
+
+          <polygon class="decision" points="360,132 456,180 360,228 264,180" />
+          <text class="title" x="360" y="176" text-anchor="middle">超过软阈值？</text>
+          <text class="note" x="250" y="158" text-anchor="end">没有</text>
+          <text class="note" x="470" y="158">有</text>
+
+          <line class="arrow" x1="264" y1="180" x2="140" y2="180" marker-end="url(#arr-c)" />
+          <rect class="box" x="24" y="152" width="112" height="56" rx="6" />
+          <text class="title" x="80" y="186" text-anchor="middle">不压</text>
+
+          <line class="arrow" x1="456" y1="180" x2="580" y2="180" marker-end="url(#arr-c)" />
+          <rect class="box-fill" x="564" y="152" width="132" height="56" rx="6" />
+          <text class="title" x="630" y="176" text-anchor="middle">先清大结果</text>
+          <text class="sub" x="630" y="194" text-anchor="middle">超长的外置成文件</text>
+
+          <line class="arrow" x1="630" y1="208" x2="630" y2="236" marker-end="url(#arr-c)" />
+          <rect class="box-fill" x="504" y="240" width="192" height="56" rx="6" />
+          <text class="title" x="600" y="264" text-anchor="middle">旧轮做成结构化摘要</text>
+          <text class="sub" x="600" y="282" text-anchor="middle">目标、结论、路径、错误、下一步</text>
+
+          <line class="arrow" x1="504" y1="268" x2="360" y2="268" marker-end="url(#arr-c)" />
+          <rect class="box" x="168" y="240" width="192" height="56" rx="6" />
+          <text class="title" x="264" y="264" text-anchor="middle">热持当前这一轮</text>
+          <text class="sub" x="264" y="282" text-anchor="middle">最近原文还在</text>
+
+          <line class="arrow" x1="360" y1="296" x2="360" y2="324" marker-end="url(#arr-c)" />
+          <polygon class="decision" points="360,328 444,368 360,408 276,368" />
+          <text class="title" x="360" y="364" text-anchor="middle">还超硬阈值？</text>
+          <text class="note" x="262" y="348" text-anchor="end">没有</text>
+          <text class="note" x="458" y="348">有</text>
+          <line class="arrow" x1="276" y1="368" x2="120" y2="368" marker-end="url(#arr-c)" />
+          <rect class="box" x="24" y="340" width="96" height="56" rx="6" />
+          <text class="title" x="72" y="374" text-anchor="middle">继续问</text>
+          <line class="arrow" x1="444" y1="368" x2="560" y2="368" marker-end="url(#arr-c)" />
+          <rect class="box" x="508" y="340" width="188" height="56" rx="6" />
+          <text class="title" x="602" y="364" text-anchor="middle">再压一次</text>
+          <text class="sub" x="602" y="382" text-anchor="middle">仍超则请新开会话</text>
+        </svg>
+        <figcaption>在线软阈值大约四万九千 tokens，硬阈值大约九万八。本机模型按窗口的七成、九成来。摘要落在会话状态里，下一轮当工作记忆用，不是长期记忆那份文件。</figcaption>
+      </figure>
+    </section>
+
+    <section>
       <h2 id="tools">工具怎么出去</h2>
       <p>模型只提出要用哪一种能力。真正动手前，都经过同一道闸：先校正路径，再看能不能做。本机日常以放行为主；明确不允许的直接拒绝并交回模型。高风险或高成本会先问客户端，等确认期间不能插话。</p>
       <figure class="diagram">
@@ -544,7 +607,7 @@
         <li>
           <p class="when">2026.09</p>
           <p class="scope">引擎 · 客户端</p>
-          <p>向量记忆从日常对话拿掉，改成本地一份 MEMORY.md。点桌面改由主模型出目标、报点后再点，不再另开桌面小助手。Host 浏览器整条链路落地：窗口在客户端开，引擎只发请求。插话进当前轮、子任务状态、AskQuestion，也是这个月对齐的。</p>
+          <p>向量记忆从日常对话拿掉，改成本地一份 MEMORY.md。点桌面改由主模型出目标、报点后再点，不再另开桌面小助手。Host 浏览器整条链路落地：窗口在客户端开，引擎只发请求。会话历史按预算压缩落盘。插话进当前轮、子任务状态、AskQuestion，也是这个月对齐的。</p>
         </li>
         <li>
           <p class="when">2026.10</p>
@@ -554,7 +617,7 @@
         <li>
           <p class="when">2026.11</p>
           <p class="scope">引擎 · 客户端局域网</p>
-          <p>9 日起做局域房间和「发给电脑」：扫描、进房、对端用自己的引擎跑、进度镜像回来。18 日下线企业协作，只留房间。防火墙放行、共享目录、忙碌状态，是房间页收尾时补上的。</p>
+          <p>9 日起做局域房间和「发给电脑」：扫描、进房、对端用自己的引擎跑、进度镜像回来。18 日下线企业协作，只留房间。防火墙放行、共享目录、忙碌状态，是房间页收尾时补上的。超长工具结果改成外置文件，对话里只留可审计的定位。</p>
         </li>
       </ul>
     </section>
