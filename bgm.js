@@ -16,8 +16,22 @@
     ".bgm-btn:focus-visible{outline:2px solid var(--copper,#b4532a);outline-offset:2px}";
   document.head.appendChild(style);
 
+  function dirUrl() {
+    var path = location.pathname || "/";
+    if (/\.html?$/i.test(path)) path = path.replace(/[^/]+$/, "");
+    else if (path.slice(-1) !== "/") path += "/";
+    return location.origin + path;
+  }
+
+  var BASE = dirUrl();
+  var pendingPos = (function () {
+    var t = parseFloat(sessionStorage.getItem(POS_KEY) || "0");
+    return t > 0.25 && isFinite(t) ? t : 0;
+  })();
+  var posReady = !pendingPos;
+
   var audio = document.createElement("audio");
-  audio.src = "media/bgm.mp3";
+  audio.src = BASE + "media/bgm.mp3";
   audio.loop = true;
   audio.preload = "auto";
   audio.autoplay = true;
@@ -48,24 +62,40 @@
     });
   }
 
-  function savedPos() {
-    var t = parseFloat(sessionStorage.getItem(POS_KEY) || "0");
-    return t > 0.25 && isFinite(t) ? t : 0;
-  }
-
   function savePos() {
-    if (userStopped) return;
+    if (userStopped || !posReady) return;
+    var t = audio.currentTime || 0;
+    if (t < 0.2) return;
+    pendingPos = t;
     try {
-      sessionStorage.setItem(POS_KEY, String(audio.currentTime || 0));
+      sessionStorage.setItem(POS_KEY, String(t));
     } catch (err) {}
   }
 
   function restorePos() {
-    var t = savedPos();
-    if (!t) return;
+    if (!pendingPos) {
+      posReady = true;
+      return;
+    }
+    if (audio.readyState < 1) return false;
     try {
-      audio.currentTime = t;
-    } catch (err) {}
+      audio.currentTime = pendingPos;
+      posReady = true;
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
+
+  function whenMeta(fn) {
+    if (audio.readyState >= 1) {
+      fn();
+      return;
+    }
+    audio.addEventListener("loadedmetadata", function once() {
+      audio.removeEventListener("loadedmetadata", once);
+      fn();
+    });
   }
 
   function cancelFade() {
@@ -114,11 +144,36 @@
     fn();
   }
 
+  function internalFile(url) {
+    var u;
+    try {
+      u = new URL(url, BASE);
+    } catch (err) {
+      return null;
+    }
+    if (u.origin !== location.origin) return null;
+    var parts = u.pathname.split("/").filter(Boolean);
+    var file = parts[parts.length - 1] || "index.html";
+    if (file === "cherry" || file === "cherry.html") return "cherry.html";
+    if (file === "pet" || file === "pet.html") return "pet.html";
+    if (file === "index.html" || file === "index") return "index.html";
+    if (!/\./.test(file)) return "index.html";
+    return null;
+  }
+
+  function pageHref(file) {
+    return BASE + file;
+  }
+
   function onFirstGesture(e) {
     if (userStopped || !audio.paused) return;
     if (e.target && e.target.closest && e.target.closest(".bgm-btn")) return;
+    if (e.target && e.target.closest) {
+      var a = e.target.closest("a");
+      if (a && internalFile(a.href)) return;
+    }
     disarmGesture();
-    playUser({ fade: !savedPos() });
+    playUser({ fade: !pendingPos });
   }
 
   function armGesture() {
@@ -182,20 +237,24 @@
     sessionStorage.removeItem(KEY);
     cancelResume();
     disarmGesture();
-    restorePos();
     if (fade) audio.volume = 0;
     else audio.volume = TARGET;
-    playThen(function () {
-      if (userStopped) return;
-      if (fade) fadeTo(TARGET, FADE_IN_MS, label);
-      label();
-    }, armGesture);
+    whenMeta(function () {
+      restorePos();
+      playThen(function () {
+        if (userStopped) return;
+        if (fade) fadeTo(TARGET, FADE_IN_MS, label);
+        label();
+      }, armGesture);
+    });
     label();
   }
 
   function stopUser() {
     userStopped = true;
     ducked = false;
+    pendingPos = 0;
+    posReady = true;
     sessionStorage.setItem(KEY, "1");
     sessionStorage.removeItem(POS_KEY);
     cancelResume();
@@ -208,23 +267,6 @@
       label();
     });
     label();
-  }
-
-  function resumeFile(url) {
-    var u;
-    try {
-      u = new URL(url, location.href);
-    } catch (err) {
-      return null;
-    }
-    if (u.origin !== location.origin) return null;
-    var parts = u.pathname.split("/").filter(Boolean);
-    var file = parts[parts.length - 1] || "index.html";
-    if (file === "cherry" || file === "cherry.html") return "cherry.html";
-    if (file === "pet" || file === "pet.html") return "pet.html";
-    if (file === "index.html" || file === "index") return "index.html";
-    if (!/\./.test(file)) return "index.html";
-    return null;
   }
 
   function leaveVideoDuck() {
@@ -262,7 +304,8 @@
   }
 
   function go(href, push) {
-    var url = new URL(href, location.href).href;
+    savePos();
+    var url = new URL(href, BASE).href;
     if (push && url === location.href) return;
     navigating = true;
     fetch(url, { credentials: "same-origin" })
@@ -363,19 +406,25 @@
       if (e.defaultPrevented || e.button !== 0) return;
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       var a = e.target.closest ? e.target.closest("a") : null;
-      if (!a || !a.href) return;
+      if (!a || !a.getAttribute("href")) return;
       if (a.target && a.target !== "_self") return;
-      if (!resumeFile(a.href)) return;
-      var dest = new URL(a.href, location.href);
-      if (dest.pathname === location.pathname && dest.search === location.search) return;
+      var file = internalFile(a.getAttribute("href"));
+      if (!file) return;
+      var dest = pageHref(file);
+      if (dest === location.href || dest === location.origin + location.pathname) {
+        var here = internalFile(location.href);
+        if (here === file) return;
+      }
       e.preventDefault();
-      go(dest.href, true);
+      e.stopPropagation();
+      go(dest, true);
     },
     true
   );
 
   window.addEventListener("popstate", function () {
-    go(location.href, false);
+    var file = internalFile(location.href) || "index.html";
+    go(pageHref(file), false);
   });
 
   document.body.appendChild(audio);
@@ -386,11 +435,6 @@
     audio.pause();
     label();
   } else {
-    playUser({ fade: !savedPos() });
-    audio.addEventListener("canplay", function onReady() {
-      audio.removeEventListener("canplay", onReady);
-      restorePos();
-      if (!userStopped && audio.paused) playUser({ fade: false });
-    });
+    playUser({ fade: !pendingPos });
   }
 })();
