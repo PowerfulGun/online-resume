@@ -149,58 +149,61 @@
 
     <section>
       <h2>怎么叠在一起</h2>
-      <p>三层各管各的。上面是聊天和设置窗口，中间是主进程：好感、人设、语音、要不要把活交出去。底下是身体所在的壁纸宿主，以及办事时才碰到的云端语音和办公引擎。窗口和身体用本机管道说话，和交给办公引擎的那条不是同一条。</p>
+      <p>窗口和主进程是 Electron。身体在单独拉起的壁纸宿主里，办事交给本机 Agent 引擎。这两条都是本机进程，和云端实时语音不是一类。窗口和身体用本机管道说话，和交给引擎的那条不是同一条。</p>
       <figure class="diagram">
-        <svg viewBox="0 0 720 430" role="img" aria-labelledby="arch-title">
-          <title id="arch-title">樱桃陪伴：窗口、主进程、壁纸身体与外部依赖</title>
+        <svg viewBox="0 0 720 500" role="img" aria-labelledby="arch-title">
+          <title id="arch-title">樱桃陪伴：窗口、主进程、本机进程与云端语音</title>
           <defs>
             <marker id="arr" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
               <path d="M0,0 L8,4 L0,8 Z" fill="#b4532a" />
             </marker>
           </defs>
-          <rect class="lane" x="16" y="16" width="688" height="92" rx="8" />
-          <text class="lane-label" x="32" y="38">窗口 · 我写</text>
-          <rect class="box" x="32" y="50" width="656" height="44" rx="6" />
-          <text class="title" x="360" y="78" text-anchor="middle">Electron 窗口 · 聊天、设置、人设、日记、照顾</text>
+          <rect class="lane" x="16" y="16" width="688" height="84" rx="8" />
+          <text class="lane-label" x="32" y="36">窗口 · 我写</text>
+          <rect class="box" x="32" y="48" width="656" height="40" rx="6" />
+          <text class="title" x="360" y="74" text-anchor="middle">Electron 窗口 · 聊天、设置、人设、日记、照顾</text>
 
-          <line class="arrow" x1="360" y1="108" x2="360" y2="132" marker-end="url(#arr)" />
+          <line class="arrow" x1="360" y1="100" x2="360" y2="120" marker-end="url(#arr)" />
 
-          <rect class="lane" x="16" y="136" width="688" height="150" rx="8" />
-          <text class="lane-label" x="32" y="158">主进程 · 我写</text>
-          <rect class="box-fill" x="32" y="172" width="152" height="92" rx="6" />
-          <text class="title" x="108" y="208" text-anchor="middle">好感</text>
-          <text class="sub" x="108" y="230" text-anchor="middle">等级、心情、解锁</text>
-          <rect class="box-fill" x="200" y="172" width="152" height="92" rx="6" />
-          <text class="title" x="276" y="208" text-anchor="middle">人设</text>
-          <text class="sub" x="276" y="230" text-anchor="middle">口癖、傲娇到粘人</text>
-          <rect class="box-fill" x="368" y="172" width="152" height="92" rx="6" />
-          <text class="title" x="444" y="208" text-anchor="middle">语音协调</text>
-          <text class="sub" x="444" y="230" text-anchor="middle">口型、字幕、回声</text>
-          <rect class="box-fill" x="536" y="172" width="152" height="92" rx="6" />
-          <text class="title" x="612" y="208" text-anchor="middle">交不交活</text>
-          <text class="sub" x="612" y="230" text-anchor="middle">派骑士才出去</text>
+          <rect class="lane" x="16" y="124" width="688" height="140" rx="8" />
+          <text class="lane-label" x="32" y="144">主进程 · 我写</text>
+          <rect class="box-fill" x="32" y="156" width="152" height="88" rx="6" />
+          <text class="title" x="108" y="190" text-anchor="middle">好感</text>
+          <text class="sub" x="108" y="210" text-anchor="middle">等级、心情、解锁</text>
+          <rect class="box-fill" x="200" y="156" width="152" height="88" rx="6" />
+          <text class="title" x="276" y="190" text-anchor="middle">人设</text>
+          <text class="sub" x="276" y="210" text-anchor="middle">口癖、傲娇到粘人</text>
+          <rect class="box-fill" x="368" y="156" width="152" height="88" rx="6" />
+          <text class="title" x="444" y="190" text-anchor="middle">语音协调</text>
+          <text class="sub" x="444" y="210" text-anchor="middle">口型、字幕、回声</text>
+          <rect class="box-fill" x="536" y="156" width="152" height="88" rx="6" />
+          <text class="title" x="612" y="190" text-anchor="middle">交不交活</text>
+          <text class="sub" x="612" y="210" text-anchor="middle">派骑士才出去</text>
 
-          <line class="arrow" x1="108" y1="286" x2="108" y2="316" marker-end="url(#arr)" />
-          <line class="arrow" x1="444" y1="286" x2="444" y2="316" marker-end="url(#arr)" />
-          <line class="arrow" x1="612" y1="286" x2="612" y2="316" marker-end="url(#arr)" />
+          <line class="arrow" x1="192" y1="244" x2="156" y2="328" marker-end="url(#arr)" />
+          <line class="arrow" x1="612" y1="244" x2="580" y2="328" marker-end="url(#arr)" />
+          <path class="arrow" d="M444,244 L444,280 L444,404" marker-end="url(#arr)" />
 
-          <rect class="lane" x="16" y="320" width="688" height="92" rx="8" />
-          <text class="lane-label" x="32" y="342">外部</text>
-          <rect class="box" x="32" y="354" width="208" height="44" rx="6" />
-          <text x="136" y="382" text-anchor="middle">壁纸宿主 · VRM 身体</text>
-          <rect class="box" x="256" y="354" width="208" height="44" rx="6" />
-          <text x="360" y="382" text-anchor="middle">云端实时语音</text>
-          <rect class="box" x="480" y="354" width="208" height="44" rx="6" />
-          <text x="584" y="382" text-anchor="middle">办公引擎 SuperAI</text>
+          <rect class="lane" x="16" y="296" width="688" height="92" rx="8" />
+          <text class="lane-label" x="32" y="316">本机进程</text>
+          <rect class="box" x="32" y="328" width="248" height="44" rx="6" />
+          <text x="156" y="356" text-anchor="middle">壁纸宿主 · VRM 身体</text>
+          <rect class="box" x="472" y="328" width="216" height="44" rx="6" />
+          <text x="580" y="356" text-anchor="middle">Agent 引擎 · 办事</text>
+
+          <rect class="lane" x="16" y="404" width="688" height="80" rx="8" />
+          <text class="lane-label" x="32" y="424">云端</text>
+          <rect class="box" x="284" y="432" width="320" height="36" rx="6" />
+          <text x="444" y="456" text-anchor="middle">实时语音 · 边听边说</text>
         </svg>
-        <figcaption>身体挂在 Win10 图标层后的 WorkerW 上，点击能穿透到角色。办事不走这条管道，接到樱桃 AI 的引擎。</figcaption>
+        <figcaption>身体挂在桌面图标层后的 WorkerW 上（Win10 这条路径），点击能穿透到角色。办事不走壁纸管道，接到本机 Agent 引擎。</figcaption>
       </figure>
     </section>
 
     <section>
       <h2>人设和好感</h2>
-      <p>可以起名，写最多三条口癖，还有一根从傲娇到粘人的滑条。滑条会改身体反应：偏傲娇时，连着戳更容易不耐烦；偏粘人时，摸头更容易跳舞。</p>
-      <p>好感从 1 到 50，分成初见、熟悉、信赖、亲密、羁绊。心情另外记，会慢慢往基准靠。戳、摸、说话、办完一件事，都会涨一点经验。到了新阶段，会多出一些动作和穿着。</p>
+      <p>可以给她起名（这个名字也写进语音说明里当唤醒名），写最多三条口癖，还有一根从傲娇到粘人的滑条。滑条不换一套动作库，只改反应：偏傲娇时，连戳更快不耐烦、摸头先躲一下、走近你更慢；偏粘人时，摸头更容易跳舞、更愿意走近。</p>
+      <p>好感从 1 到 50，分成初见、熟悉、信赖、亲密、羁绊。心情另外记，会慢慢往基准 60 靠。戳、摸、说话、办完一件事，都会涨一点经验。到了新阶段，会多出动作、舞蹈和穿着，不是一升级就换全身。</p>
     </section>
 
     <section>
@@ -248,7 +251,7 @@
 
           <polygon class="decision" points="360,122 448,176 360,230 272,176" />
           <text class="title" x="360" y="172" text-anchor="middle">哪一种手势</text>
-          <text class="sub" x="360" y="190" text-anchor="middle">戳 · 摸 · 拖 · 甩</text>
+          <text class="sub" x="360" y="190" text-anchor="middle">戳摸拖甩 · 抱挠滚轮</text>
           <text class="note" x="258" y="152" text-anchor="end">放下</text>
           <text class="note" x="462" y="152">甩飞</text>
 
@@ -283,7 +286,7 @@
 
     <section>
       <h2>语音对话</h2>
-      <p>说话走云端实时语音，不是在你电脑上离线识别。没有单独的硬件唤醒词。名字写在给模型的说明里。没在通话时，戳一下可以叫醒，短时间里不会连着叫。</p>
+      <p>说话走云端实时语音，不是在你电脑上离线识别。没有单独的硬件唤醒词。名字写在给模型的说明里。没在通话时，戳一下可以叫醒（设置里默开，可关），二十秒内不会连着叫。</p>
       <figure class="diagram">
         <svg viewBox="0 0 720 460" role="img" aria-labelledby="voice-title">
           <title id="voice-title">语音从麦克风到角色，或交给办事</title>
@@ -323,7 +326,7 @@
 
           <line class="arrow" x1="272" y1="272" x2="188" y2="272" marker-end="url(#arr3)" />
           <rect class="box" x="24" y="244" width="160" height="56" rx="6" />
-          <text class="title" x="104" y="268" text-anchor="middle">走 / 舞 / 现身</text>
+          <text class="title" x="104" y="268" text-anchor="middle">走 / 舞 / 表情</text>
           <text class="sub" x="104" y="286" text-anchor="middle">动作做完再接话</text>
 
           <line class="arrow" x1="448" y1="272" x2="524" y2="272" marker-end="url(#arr3)" />
@@ -342,13 +345,13 @@
           <text class="title" x="404" y="392" text-anchor="middle">空下来再口头告诉你</text>
           <text class="sub" x="404" y="410" text-anchor="middle">不硬插正在说的那句</text>
         </svg>
-        <figcaption>聊天输入框里的听写是另一条线，用来打字，不是桌宠这路说话。线上不再引导说唤醒词。</figcaption>
+        <figcaption>记忆、搜网、积分也是工具，不经过骑士，也不动身体。聊天输入框里的听写是另一条线，用来打字。线上不再引导说唤醒词。</figcaption>
       </figure>
     </section>
 
     <section>
       <h2>把活交出去</h2>
-      <p>你说要在电脑上办事，语音这边会交给办公助手。产品里把这一下叫派骑士。桌宠自己不去点屏幕、不跑命令。</p>
+      <p>你说要在电脑上办事，语音这边会交给本机 Agent 引擎。产品里把这一下叫派骑士。桌宠自己不去点屏幕、不跑命令。</p>
       <figure class="diagram">
         <svg viewBox="0 0 720 340" role="img" aria-labelledby="knight-title">
           <title id="knight-title">语音把任务交给本机办公引擎</title>
@@ -360,7 +363,7 @@
           <rect class="lane" x="16" y="16" width="336" height="308" rx="8" />
           <text class="lane-label" x="32" y="40">桌宠语音</text>
           <rect class="lane" x="368" y="16" width="336" height="308" rx="8" />
-          <text class="lane-label" x="384" y="40">本机办公引擎</text>
+          <text class="lane-label" x="384" y="40">本机 Agent 引擎</text>
 
           <circle class="num" cx="56" cy="84" r="12" />
           <text class="num-text" x="56" y="88" text-anchor="middle">1</text>
@@ -393,7 +396,7 @@
           <rect class="box" x="76" y="268" width="256" height="40" rx="6" />
           <text class="sub" x="204" y="294" text-anchor="middle">查进度 / 停 / 接着办 · 口头回报</text>
         </svg>
-        <figcaption>list / get / cancel / send 都对着本机办公引擎的会话。桌宠里不另开一条命令通道。</figcaption>
+        <figcaption>列出、查看、停掉、接着办，都对着本机 Agent 引擎的会话。桌宠里不另开一条命令通道。</figcaption>
       </figure>
     </section>
 
@@ -409,7 +412,7 @@
         <li>
           <p class="when">2026.09.30</p>
           <p class="scope">交互 · 好感</p>
-          <p>九分区命中、拖、走、反馈；戳在气泡和语音两侧语义统一。好感接到等级、心情、三条经验和解锁。自主待机、当日初见问候。照顾、日记、人设进产品；被其他窗口挡住时停止反应。</p>
+          <p>九分区命中、拖、走、反馈；戳在气泡和语音两侧语义统一。好感接到等级、心情，以及手势、聊天、语音三条经验来源和解锁。自主待机、当日初见问候。照顾、日记、人设进产品；被其他窗口挡住时停止反应。</p>
         </li>
         <li>
           <p class="when">2026.10.01</p>
@@ -469,7 +472,7 @@
             <tr>
               <td>10.01</td>
               <td>久站后自动坐下当摆件</td>
-              <td>当天撤回。坐姿还不合适，避免自己切进去。</td>
+              <td>当天撤回拧手臂那版摆件。10.02 起改成安静一两分钟后走去坐任务栏，不是同一套动作。</td>
             </tr>
             <tr>
               <td>10.02</td>
@@ -514,9 +517,9 @@
       <ul class="boundary">
         <li>形象是三维模型，不是 Live2D 那种纸片人。</li>
         <li>语音是云端实时，不是本机离线识别。输入框听写是另一条线。</li>
-        <li>办事只交给本机的办公引擎。没有再接一套桌宠自己的桌面操作。</li>
-        <li>没有接到产品里的硬件唤醒词。叫醒靠说明里的名字，以及戳一下。</li>
-        <li>设计里还写过、线上还没有做成的：说话时叠一段专门的说话动作；性格把身体反应全部带动起来。现在只做到滑条影响戳和摸头这些反应。</li>
+        <li>办事只交给本机 Agent 引擎。没有再接一套桌宠自己的桌面操作。</li>
+        <li>没有接到产品里的硬件唤醒词。叫醒靠说明里的名字，以及可开关的戳一戳。</li>
+        <li>说话时会叠上半身的说话片段（站着叠 talk，坐下走 sit_talk）。性格滑条改反应时机和抽签，不另烤一套全身动作。坐下时多数手势仍只动上半身或表情。</li>
       </ul>
     </section>
   </main>
