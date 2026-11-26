@@ -30,7 +30,7 @@
 
   function syncButtons() {
     var on = playing() && !ducked;
-    var text = on || (ducked && !userStopped) ? "停止" : "播放自述";
+    var text = on ? "停止" : "播放自述";
     document.querySelectorAll(".intro-play").forEach(function (btn) {
       btn.textContent = text;
       btn.setAttribute("aria-pressed", on ? "true" : "false");
@@ -79,14 +79,20 @@
 
   function playThen(fn) {
     var p = audio.play();
-    if (p && p.then) p.then(fn).catch(syncButtons);
+    if (p && p.then) p.then(fn).catch(function () {
+      syncButtons();
+    });
     else fn();
   }
 
   function duckForVideo() {
     if (userStopped || navigating) return;
+    if (!videoPlaying()) {
+      scheduleUnduck();
+      return;
+    }
     cancelResume();
-    if (ducked && audio.volume <= 0.02) {
+    if (ducked && audio.paused && audio.volume <= 0.02) {
       syncButtons();
       return;
     }
@@ -102,13 +108,28 @@
   function unduck() {
     resumeTimer = 0;
     if (userStopped || videoPlaying()) return;
+    cancelFade();
     ducked = false;
     audio.volume = 0;
-    playThen(function () {
+    var p = audio.play();
+    function afterPlay() {
       if (userStopped || videoPlaying() || ducked) return;
       fadeTo(TARGET, FADE_IN_MS, syncButtons);
       syncButtons();
+    }
+    function retryPlay() {
+      if (userStopped || videoPlaying() || ducked) {
+        syncButtons();
+        return;
+      }
+      var again = audio.play();
+      if (again && again.then) again.then(afterPlay).catch(syncButtons);
+      else afterPlay();
+    }
+    if (p && p.then) p.then(afterPlay).catch(function () {
+      setTimeout(retryPlay, 80);
     });
+    else afterPlay();
     syncButtons();
   }
 
@@ -118,8 +139,10 @@
     resumeTimer = setTimeout(unduck, RESUME_DELAY_MS);
   }
 
-  function keepDuckedThroughStall() {
+  function keepDuckedThroughStall(video) {
     if (userStopped) return;
+    if (video && (video.paused || video.ended)) return;
+    if (!videoPlaying()) return;
     cancelResume();
   }
 
@@ -130,6 +153,7 @@
     audio.volume = TARGET;
     playThen(syncButtons);
     syncButtons();
+    if (videoPlaying()) duckForVideo();
   }
 
   function stopIntro() {
@@ -143,8 +167,8 @@
   }
 
   function toggleIntro() {
-    if (userStopped || (audio.paused && !ducked) || audio.ended) playIntro();
-    else stopIntro();
+    if (playing() && !ducked) stopIntro();
+    else playIntro();
   }
 
   function leaveVideoDuck() {
@@ -275,37 +299,39 @@
   document.addEventListener(
     "play",
     function (e) {
-      if (e.target && e.target.tagName === "VIDEO") duckForVideo();
+      if (!e.target || e.target.tagName !== "VIDEO") return;
+      if (e.target.paused || e.target.ended) return;
+      duckForVideo();
     },
     true
   );
   document.addEventListener(
     "waiting",
     function (e) {
-      if (e.target && e.target.tagName === "VIDEO") keepDuckedThroughStall();
+      if (e.target && e.target.tagName === "VIDEO") keepDuckedThroughStall(e.target);
     },
     true
   );
   document.addEventListener(
     "stalled",
     function (e) {
-      if (e.target && e.target.tagName === "VIDEO") keepDuckedThroughStall();
+      if (e.target && e.target.tagName === "VIDEO") keepDuckedThroughStall(e.target);
     },
     true
   );
   document.addEventListener(
     "seeking",
     function (e) {
-      if (e.target && e.target.tagName === "VIDEO") keepDuckedThroughStall();
+      if (e.target && e.target.tagName === "VIDEO") keepDuckedThroughStall(e.target);
     },
     true
   );
   document.addEventListener(
     "playing",
     function (e) {
-      if (e.target && e.target.tagName === "VIDEO" && !e.target.paused && !e.target.ended) {
-        keepDuckedThroughStall();
-      }
+      if (!e.target || e.target.tagName !== "VIDEO") return;
+      if (e.target.paused || e.target.ended) return;
+      duckForVideo();
     },
     true
   );
@@ -316,6 +342,16 @@
       if (navigating) return;
       if (e.target.seeking || !e.target.paused) return;
       scheduleUnduck();
+    },
+    true
+  );
+  document.addEventListener(
+    "seeked",
+    function (e) {
+      if (!e.target || e.target.tagName !== "VIDEO") return;
+      if (navigating) return;
+      if (e.target.paused || e.target.ended) scheduleUnduck();
+      else keepDuckedThroughStall(e.target);
     },
     true
   );
