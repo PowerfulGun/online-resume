@@ -72,6 +72,11 @@
     .job .when { margin: 4px 0 8px; color: var(--muted); font-size: 14px; }
     .job ul { margin: 0; padding-left: 1.2em; }
     .job li { margin: 0 0 6px; }
+    .compare { margin-top: 36px; overflow-x: auto; }
+    .compare table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+    .compare th, .compare td { border-bottom: 1px solid var(--line); padding: 10px 8px; text-align: left; vertical-align: top; }
+    .compare th { color: var(--muted); font-weight: 650; font-size: 13px; letter-spacing: 0.08em; }
+    .compare td:first-child { white-space: nowrap; font-weight: 650; }
   </style>
 </head>
 <body>
@@ -81,7 +86,7 @@
       <p class="aka">焊枪</p>
       <p class="facts">29 岁 · 7 年经验 · 求职意向 AI · 江苏南京 · 20–30 千/月<br />在职找工作，1 个月内到岗</p>
       <div class="lede">
-        <p>我在 Windows 上做能帮人干活的 AI 助手。今年 3 月先用 OpenClaw 的现成包跑起来，后来把核心一段段换成自己写的。提交记录里能对上的参考主要是：干活方式对齐过 Cursor（待办、插话、把一件事交给子任务），改文件和长期记忆文件对齐过 Claude Code，点桌面接过 Windows-MCP。岗位上常写的 LangChain、Dify 那些，仓库里没有拿来当底座。</p>
+        <p>我在 Windows 上做能帮人干活的 AI 助手。今年 3 月先用 OpenClaw 的现成包跑起来，后来把核心一段段换成自己写的。下面是和常见助手框架的对照：哪些写进了提交记录，哪些只当产品看过、没有当底座。</p>
         <p>在这之前我写过 Windows 驱动，做过电脑上的安全采集和自保护。助手能操作电脑、能跑命令，所以哪些事不能让它随便做，我比较在意。</p>
       </div>
       <ul class="contact">
@@ -93,6 +98,56 @@
         <figcaption>CCIE Routing and Switching #57955，2017-12-13 取得。</figcaption>
       </figure>
     </header>
+
+    <section class="compare">
+      <h2>对照过什么</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>对照谁</th>
+            <th>我拿了什么</th>
+            <th>我没跟着走</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>OpenClaw</td>
+            <td>3 月用它的现成包先跑起来；技能包里还留着它的元数据格式。</td>
+            <td>没有一直绑在它的运行时上，核心后来自己写。</td>
+          </tr>
+          <tr>
+            <td>Cursor</td>
+            <td>待办怎么写、用户插话怎么进当前这一轮、子任务的状态怎么报。</td>
+            <td>不是做 IDE 插件，是做装在 Windows 上的助手。</td>
+          </tr>
+          <tr>
+            <td>Claude Code</td>
+            <td>长期记忆写成一份本地文件；改文件用补丁；跑得久的命令先等一小会，超时再放到后台。</td>
+            <td>不是做它那种终端产品，也不走它的订阅。</td>
+          </tr>
+          <tr>
+            <td>Harness</td>
+            <td>自己写了一层编排：一轮对话何时开始、做到哪一步、何时结束、子任务怎么收口。代码里就叫这个名字。</td>
+            <td>没有去套别人现成的 Harness 包。</td>
+          </tr>
+          <tr>
+            <td>Windows-MCP</td>
+            <td>点桌面走这套接口。</td>
+            <td>主模型自己下指令。点了没反应就停，避免瞎点。</td>
+          </tr>
+          <tr>
+            <td>字节（豆包）</td>
+            <td>网关里接过豆包，当一种能调用的模型。</td>
+            <td>不是 Agent 框架。默认配置里后来还拿掉过。</td>
+          </tr>
+          <tr>
+            <td>Grok 等产品</td>
+            <td>日常当成品助手对照，看对话和工具怎么走。</td>
+            <td>提交记录里没有把它们的代码当底座。LangChain、Dify 同样没有。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
 
     <h2>作品</h2>
 
