@@ -38,7 +38,7 @@
     .kicker { margin: 10px 0 0; color: var(--muted); font-size: 15px; }
     .lead { margin: 22px 0 0; font-size: 18px; }
     .lead p { margin: 0 0 12px; }
-    h2 { margin: 42px 0 8px; font-size: 15px; letter-spacing: 0.16em; font-weight: 650; }
+    h2 { margin: 42px 0 8px; font-size: 15px; letter-spacing: 0.16em; font-weight: 650; scroll-margin-top: 16px; }
     p { margin: 0 0 12px; }
     ul { margin: 8px 0 0; padding-left: 1.2em; }
     li { margin: 0 0 8px; }
@@ -128,7 +128,7 @@
 </head>
 <body>
   <main>
-    <p class="back"><a href="index.html">返回简历</a></p>
+    <p class="back"><a href="index.html">返回简历</a> · <a href="facts.html">事实表</a></p>
     <header>
       <h1>樱桃 AI</h1>
       <p class="kicker">Windows 办公助手。引擎是我写的；办公界面是团队一起做的。</p>
@@ -138,6 +138,16 @@
         <p>调用大模型的密钥放在服务器上，不放在用户电脑里。要打开浏览器时，窗口是客户端开的，引擎只发请求、把结果收回来。</p>
       </div>
     </header>
+
+    <section>
+      <h2 id="after-launch">上线之后</h2>
+      <ul>
+        <li>2026 年 7 月 28 日客户端开始接入，现已在生产环境使用。办公主界面仍是同事的。</li>
+        <li>6 月起，模型密钥只放在公司网关。用户电脑不再持有厂商密钥。</li>
+        <li>9 月 11 日起，日常对话不再做向量检索。长期记忆改成本机一份文件，只有这一轮成功做完才写入。</li>
+        <li>11 月 9 日局域网房间和「发给电脑」上线。11 月 18 日公司内部多人协作下线，只留房间。</li>
+      </ul>
+    </section>
 
     <section>
       <h2>怎么叠在一起</h2>
@@ -413,7 +423,7 @@
     </section>
 
     <section>
-      <h2>做过的决策</h2>
+      <h2 id="decisions">做过的决策</h2>
       <ul>
         <li>用向量把对话存进知识库，试过几个月。4 月接上，7 月拆掉。9 月 11 日改成记在一份本地文件里。现在日常对话不再做向量检索。</li>
         <li>9 月 14 日起，点桌面由主模型自己下指令，不再另开一个小助手去点。点了没反应就停，避免瞎点。</li>

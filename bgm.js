@@ -174,6 +174,7 @@
     var file = parts[parts.length - 1] || "index.html";
     if (file === "cherry" || file === "cherry.html") return "cherry.html";
     if (file === "pet" || file === "pet.html") return "pet.html";
+    if (file === "facts" || file === "facts.html") return "facts.html";
     if (file === "index.html" || file === "index") return "index.html";
     if (!/\./.test(file)) return "index.html";
     return null;
@@ -197,7 +198,17 @@
     curMain.replaceWith(document.importNode(nextMain, true));
     document.title = doc.title || document.title;
     if (push) history.pushState({ resumeNav: 1 }, "", href);
-    window.scrollTo(0, 0);
+    var hash = "";
+    try {
+      hash = new URL(href, BASE).hash;
+    } catch (err) {}
+    if (hash) {
+      var el = document.getElementById(decodeURIComponent(hash.slice(1)));
+      if (el) el.scrollIntoView();
+      else window.scrollTo(0, 0);
+    } else {
+      window.scrollTo(0, 0);
+    }
     leaveVideoDuck();
     syncButtons();
     return true;
@@ -250,6 +261,10 @@
     var file = internalFile(a.getAttribute("href"));
     if (!file) return;
     var dest = pageHref(file);
+    try {
+      var raw = new URL(a.getAttribute("href"), BASE);
+      if (raw.hash) dest += raw.hash;
+    } catch (err) {}
     var here = internalFile(location.href);
     if (here === file) return;
     e.preventDefault();

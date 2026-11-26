@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>事实表 · 韩强</title>
+  <style>
+    :root {
+      --paper: #f3efe6;
+      --ink: #1c1915;
+      --muted: #6d655c;
+      --line: #d9d0c3;
+      --copper: #b4532a;
+      --card: #fffdf8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 400px at 10% -10%, rgba(180, 83, 42, 0.08), transparent 50%),
+        var(--paper);
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.65;
+    }
+    main { max-width: 860px; margin: 0 auto; padding: 36px 22px 80px; }
+    a { color: var(--copper); }
+    .back { margin: 0 0 22px; }
+    h1 {
+      margin: 0;
+      font-family: Palatino, "Palatino Linotype", "Songti SC", serif;
+      font-size: clamp(36px, 6vw, 52px);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      line-height: 1.15;
+    }
+    .kicker { margin: 10px 0 0; color: var(--muted); font-size: 15px; }
+    .lead { margin: 22px 0 0; font-size: 18px; }
+    .lead p { margin: 0 0 12px; }
+    h2 {
+      margin: 42px 0 8px;
+      font-size: 15px;
+      letter-spacing: 0.16em;
+      font-weight: 650;
+      scroll-margin-top: 16px;
+    }
+    p { margin: 0 0 12px; }
+    .compare { margin-top: 8px; overflow-x: auto; }
+    .compare table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+    .compare th, .compare td { border-bottom: 1px solid var(--line); padding: 10px 8px; text-align: left; vertical-align: top; }
+    .compare th { color: var(--muted); font-weight: 650; font-size: 13px; letter-spacing: 0.08em; white-space: nowrap; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="back"><a href="index.html">返回简历</a></p>
+    <header>
+      <h1>事实表</h1>
+      <p class="kicker">给人和程序共用的清单。细节仍在作品页。</p>
+      <div class="lead">
+        <p>每条同一套字段：主张、是谁做的、日期、不是什么。引用请指到本节，例如 <a href="facts.html#shipped">facts.html#shipped</a>。</p>
+      </div>
+    </header>
+
+    <section>
+      <h2 id="who">人与职位</h2>
+      <div class="compare">
+        <table>
+          <thead>
+            <tr>
+              <th>主张</th>
+              <th>是谁做的</th>
+              <th>日期</th>
+              <th>不是什么</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>韩强，Windows AI Agent 工程师，江苏南京</td>
+              <td>本人</td>
+              <td>2025.9 起在南京虎踞龙盘智慧科技有限公司</td>
+              <td>不是独立做出整套樱桃 AI</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2 id="shipped">已上线</h2>
+      <div class="compare">
+        <table>
+          <thead>
+            <tr>
+              <th>主张</th>
+              <th>是谁做的</th>
+              <th>日期</th>
+              <th>不是什么</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>樱桃 AI 在生产环境使用</td>
+              <td>引擎 SuperAI 是韩强；办公主界面是同事</td>
+              <td>客户端 2026-07-28 起接入</td>
+              <td>不是整套产品独做</td>
+            </tr>
+            <tr>
+              <td>局域网「发给电脑」可用</td>
+              <td>引擎与发给电脑链路是韩强；房间页有同事提交</td>
+              <td>2026-11-09 上线</td>
+              <td>不是 7 月那套公司内部多人协作</td>
+            </tr>
+            <tr>
+              <td>公司内部多人协作已下线，局域网只留房间</td>
+              <td>韩强参与的产品决策</td>
+              <td>2026-11-18</td>
+              <td>不是房间也下线了</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2 id="engine">引擎边界</h2>
+      <div class="compare">
+        <table>
+          <thead>
+            <tr>
+              <th>主张</th>
+              <th>是谁做的</th>
+              <th>日期</th>
+              <th>不是什么</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>模型密钥只在公司网关</td>
+              <td>韩强改引擎接入</td>
+              <td>2026-06 起</td>
+              <td>用户电脑不持有厂商密钥</td>
+            </tr>
+            <tr>
+              <td>日常对话不再向量检索；长期记忆在本机一份文件，成功做完才写入</td>
+              <td>韩强</td>
+              <td>2026-09-11 改成本地文件</td>
+              <td>不是向量知识库</td>
+            </tr>
+            <tr>
+              <td>点桌面由主模型下指令</td>
+              <td>韩强</td>
+              <td>2026-09-14 起</td>
+              <td>不再另开小助手去点</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2 id="pet">桌宠</h2>
+      <div class="compare">
+        <table>
+          <thead>
+            <tr>
+              <th>主张</th>
+              <th>是谁做的</th>
+              <th>日期</th>
+              <th>不是什么</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>可安装版本已发出</td>
+              <td>韩强独自</td>
+              <td>2026.10.29</td>
+              <td>不是 Live2D；办事不由桌宠点屏幕</td>
+            </tr>
+            <tr>
+              <td>办事交给本机 SuperAI（派骑士）</td>
+              <td>韩强接了 handoff</td>
+              <td>与桌宠同一版本线</td>
+              <td>桌宠不另开命令通道</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2 id="store">商店应用</h2>
+      <div class="compare">
+        <table>
+          <thead>
+            <tr>
+              <th>主张</th>
+              <th>是谁做的</th>
+              <th>日期</th>
+              <th>不是什么</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>8 个独立工具在公司商店上架</td>
+              <td>上线表负责人是韩强</td>
+              <td>2025-11-22 至 2026-02-04</td>
+              <td>不是樱桃 AI 的一部分</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2 id="not">明确不是什么</h2>
+      <div class="compare">
+        <table>
+          <thead>
+            <tr>
+              <th>主张</th>
+              <th>是谁做的</th>
+              <th>日期</th>
+              <th>不是什么</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>樱桃 AI 办公主界面是同事做的</td>
+              <td>同事</td>
+              <td>与客户端同一条线</td>
+              <td>不是韩强独做整套产品</td>
+            </tr>
+            <tr>
+              <td>局域网现在只留房间</td>
+              <td>韩强参与的产品决策</td>
+              <td>2026-11-18</td>
+              <td>不是 7 月那套公司内部多人协作仍在线上</td>
+            </tr>
+            <tr>
+              <td>模型密钥在公司网关</td>
+              <td>韩强</td>
+              <td>2026-06 起</td>
+              <td>不是放在用户电脑里</td>
+            </tr>
+            <tr>
+              <td>长期记忆写在本机一份文件</td>
+              <td>韩强</td>
+              <td>2026-09-11</td>
+              <td>不是向量知识库</td>
+            </tr>
+            <tr>
+              <td>点桌面由主模型下指令</td>
+              <td>韩强</td>
+              <td>2026-09-14 起</td>
+              <td>不是另开一个小助手去点</td>
+            </tr>
+            <tr>
+              <td>桌宠是三维角色；办事交给 SuperAI</td>
+              <td>韩强独自</td>
+              <td>2026.10.29</td>
+              <td>不是 Live2D；桌宠自己不点屏幕、不跑命令</td>
+            </tr>
+            <tr>
+              <td>公司商店那 8 个工具先于樱桃 AI 上架</td>
+              <td>上线表负责人是韩强</td>
+              <td>2025-11-22 至 2026-02-04</td>
+              <td>不是樱桃 AI 的一部分</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script src="bgm.js" defer></script>
+</body>
+</html>

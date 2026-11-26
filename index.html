@@ -46,7 +46,10 @@
     .lede { margin: 22px 0 0; font-size: 18px; }
     .lede p { margin: 0 0 12px; }
     .lede p:last-child { margin-bottom: 0; }
-    .lede .view { color: var(--muted); font-size: 17px; }
+    .lede .view, .note { color: var(--muted); font-size: 17px; }
+    .note { margin: 22px 0 0; }
+    .results { margin: 14px 0 0; padding: 0; list-style: none; }
+    .results li { margin: 0 0 8px; }
     .contact { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 16px 0 0; padding: 0; list-style: none; }
     .contact a { color: var(--copper); }
     .intro-play-wrap { margin: 18px 0 0; }
@@ -72,7 +75,8 @@
       background: #1a2744;
     }
     .cert figcaption { margin-top: 8px; color: var(--muted); font-size: 14px; }
-    h2 { margin: 48px 0 8px; font-size: 15px; letter-spacing: 0.16em; font-weight: 650; }
+    h2 { margin: 48px 0 8px; font-size: 15px; letter-spacing: 0.16em; font-weight: 650; scroll-margin-top: 16px; }
+    h2 .facts-link { color: var(--copper); letter-spacing: 0; }
     .work { margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--line); }
     .work h3 { margin: 0 0 8px; font-size: 22px; font-weight: 650; }
     .work .value { margin: 0 0 6px; font-size: 17px; }
@@ -114,16 +118,29 @@
       <p class="facts">29 岁 · 7 年经验 · 江苏南京 · 在职，1 个月内到岗</p>
       <ul class="contact">
         <li><a href="mailto:PowerfulGun@qq.com">PowerfulGun@qq.com</a></li>
+        <li><a href="facts.html">事实表</a></li>
       </ul>
       <p class="intro-play-wrap">
         <button type="button" class="intro-play" aria-pressed="false">播放自述</button>
       </p>
-      <div class="lede">
-        <p class="view">AI 时代已经把知识库平权了，但知识平权不等于认知平权。还要靠创作力、社交能力、执行力、组织能力，以及推翻自己、承认无知的勇气——也就是元认知。不然会处在 AI 为自己打造的认知牢笼里。</p>
-        <p>我是一个 AI Agent 程序员，在 Windows 上做能把事办完的办公助手，类似 workbuddy。</p>
-        <p>也做过一些独立应用上架公司应用市场。</p>
-      </div>
     </header>
+
+    <section>
+      <h2 id="done">办成的事 <a class="facts-link" href="facts.html">事实表</a></h2>
+      <div class="lede">
+        <p>樱桃 AI 已上线生产。它是 Windows 上的办公助手：我写引擎 SuperAI，一轮对话里调工具、点桌面、需要时再读技能说明，成功做完才写入长期记忆。办公主界面是同事做的。</p>
+      </div>
+      <ul class="results">
+        <li>引擎从 2026 年 3 月写起，7 月 28 日客户端开始接入。调用大模型的密钥在公司网关，不在用户电脑上。</li>
+        <li>2026 年 11 月 9 日起，对话里可以把这一轮发给局域网里的另一台电脑，由那台电脑自己的引擎跑。11 月 18 日，公司内部多人协作下线，只留房间。</li>
+        <li>AI 桌宠我独自做到可安装版本 2026.10.29。桌面上聊天；要在电脑上办事，交给同一套引擎。</li>
+        <li>进樱桃 AI 之前，8 个独立工具已在公司商店上架。上线表从 2025 年 11 月 22 日记到 2026 年 2 月 4 日，负责人是我。</li>
+      </ul>
+      <video controls preload="metadata" playsinline width="1220" height="784">
+        <source src="media/cherry-demo.mp4" type="video/mp4" />
+      </video>
+      <p class="note">AI 时代已经把知识库平权了，但知识平权不等于认知平权。还要靠创作力、社交能力、执行力、组织能力，以及推翻自己、承认无知的勇气——也就是元认知。不然会处在 AI 为自己打造的认知牢笼里。</p>
+    </section>
 
     <section>
       <h2>教育</h2>
@@ -139,9 +156,6 @@
       <p class="value">Windows 上的办公助手：把一件事办完，而不是陪着聊。</p>
       <p class="mine">我负责 Agent 引擎 SuperAI，以及局域网房间和对话里的「发给电脑」。办公主界面是同事做的。</p>
       <p class="more"><a href="cherry.html">设计和流程、开发时间线</a></p>
-      <video controls preload="metadata" playsinline width="1220" height="784">
-        <source src="media/cherry-demo.mp4" type="video/mp4" />
-      </video>
     </article>
 
     <section class="jobs">
@@ -151,8 +165,9 @@
         <h3>南京虎踞龙盘智慧科技有限公司 · Windows AI Agent 工程师</h3>
         <p class="when">2025.9 – 至今</p>
         <ul>
-          <li>开发和维护ai agent引擎，UI主界面和同事一起做，已上线生产。</li>
-          <li>开发各种独立应用。</li>
+          <li>引擎 SuperAI 写到生产：回合、工具闸、桌面点击、本地长期记忆。办公主界面和同事一起做。2026 年 7 月 28 日客户端开始接入。</li>
+          <li>2026 年 11 月局域网房间和「发给电脑」上线。同月公司内部多人协作下线，只留房间。</li>
+          <li>2025 年 11 月到 2026 年 2 月，8 个独立工具在公司商店上架。</li>
         </ul>
       </article>
 
@@ -203,7 +218,7 @@
       <article class="work">
         <h3>AI桌宠</h3>
         <p class="value">桌面上的三维角色，能戳、能聊；真要办事，交给同一套办公引擎。</p>
-        <p class="mine">我独自开发。2026.9.29 立仓，10.29 发到版本 2026.10.29，仓库 48 次提交。</p>
+        <p class="mine">我独自开发，已发出可安装版本 2026.10.29。聊天在桌面上；办事交给樱桃 AI 的引擎。</p>
         <p class="more"><a href="pet.html">设计和流程、开发时间线</a></p>
         <img class="shot" src="media/pet-ui.jpg" alt="樱桃陪伴：桌面上的人物模型和语音对话窗口" />
         <video controls preload="metadata" playsinline width="1280" height="720">
@@ -214,7 +229,7 @@
       <article class="work">
         <h3>其他上架应用</h3>
         <p class="value">进樱桃 AI 之前，先在公司商店上架一批独立小工具。</p>
-        <p class="mine">我独自做并上线：桌面壁纸、摸鱼面板、文本编译器、软件搬家、视频去场、C 盘清理、文件助手、助手日历。</p>
+        <p class="mine">我独自做并上架：桌面壁纸、摸鱼面板、文本编译器、软件搬家、视频去场、C 盘清理、文件助手、助手日历。上线表从 2025.11.22 记到 2026.02.04。</p>
         <img class="shot" src="media/store-apps.png" alt="虎踞龙盘工具跟进表：上线的独立应用、时间和负责人" />
       </article>
 

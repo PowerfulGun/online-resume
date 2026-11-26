@@ -38,7 +38,7 @@
     .kicker { margin: 10px 0 0; color: var(--muted); font-size: 15px; }
     .lead { margin: 22px 0 0; font-size: 18px; }
     .lead p { margin: 0 0 12px; }
-    h2 { margin: 42px 0 8px; font-size: 15px; letter-spacing: 0.16em; font-weight: 650; }
+    h2 { margin: 42px 0 8px; font-size: 15px; letter-spacing: 0.16em; font-weight: 650; scroll-margin-top: 16px; }
     h3 { margin: 22px 0 8px; font-size: 18px; font-weight: 650; }
     p { margin: 0 0 12px; }
     ul { margin: 8px 0 0; padding-left: 1.2em; }
@@ -138,10 +138,10 @@
 </head>
 <body>
   <main>
-    <p class="back"><a href="index.html">返回简历</a></p>
+    <p class="back"><a href="index.html">返回简历</a> · <a href="facts.html">事实表</a></p>
     <header>
       <h1>AI桌宠</h1>
-      <p class="kicker">樱桃陪伴。我独自开发。仓库 48 次提交，2026.9.29 – 2026.10.29。</p>
+      <p class="kicker">樱桃陪伴。我独自开发，2026.10.29 发出可安装版本。安装和更新走自建源。</p>
       <div class="lead">
         <p>桌面上的一只三维角色，不是纸片人。聊天、设置在 Electron 窗口里；角色画在桌面壁纸那一层，能被鼠标戳、拖、甩。人设和好感会改它怎么反应。说话走云端实时语音。要在电脑上办事时，它不自己去点屏幕，而是交给本机的办公引擎（产品里叫派骑士）。</p>
       </div>
@@ -455,7 +455,7 @@
     </section>
 
     <section>
-      <h2>做过的决策</h2>
+      <h2 id="decisions">做过的决策</h2>
       <div class="compare">
         <table>
           <thead>
