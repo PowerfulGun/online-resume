@@ -3,72 +3,197 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>简历</title>
+  <title>韩强 · 焊枪</title>
   <style>
     :root {
-      --ink: #1a1a1a;
-      --muted: #6b7280;
-      --line: #e5e7eb;
-      --bg: #f6f7f9;
+      --paper: #f3efe6;
+      --ink: #1c1915;
+      --muted: #6d655c;
+      --line: #d9d0c3;
+      --copper: #b4532a;
+      --card: #fffdf8;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
       color: var(--ink);
-      background: var(--bg);
-      line-height: 1.6;
+      background:
+        radial-gradient(1200px 400px at 10% -10%, rgba(180, 83, 42, 0.08), transparent 50%),
+        var(--paper);
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.55;
     }
-    .page {
-      max-width: 760px;
-      margin: 40px auto;
-      background: #fff;
-      padding: 48px 56px;
-      box-shadow: 0 8px 30px rgba(0,0,0,.06);
+    main { max-width: 980px; margin: 0 auto; padding: 48px 22px 72px; }
+    header h1 {
+      margin: 0;
+      font-family: Palatino, "Palatino Linotype", "Songti SC", serif;
+      font-size: clamp(42px, 7vw, 68px);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      line-height: 1;
     }
-    h1 {
-      margin: 0 0 8px;
-      font-size: 32px;
-      font-weight: 650;
-      letter-spacing: .04em;
+    .aka { margin: 10px 0 0; color: var(--copper); font-size: 15px; letter-spacing: 0.18em; }
+    .lede { max-width: 38em; margin: 18px 0 0; font-size: 18px; }
+    .meta { margin: 8px 0 0; color: var(--muted); }
+    .contact { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 16px 0 0; padding: 0; list-style: none; }
+    .contact a { color: var(--ink); }
+    figure { margin: 36px 0; }
+    figcaption { margin-bottom: 10px; font-size: 13px; letter-spacing: 0.14em; color: var(--muted); }
+    .rail { overflow-x: auto; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 8px 0 4px; }
+    .rail svg { display: block; min-width: 920px; width: 100%; height: auto; }
+    h2 { margin: 36px 0 12px; font-size: 15px; letter-spacing: 0.16em; font-weight: 650; }
+    .bets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .bet {
+      background: var(--card);
+      border: 1px solid var(--line);
+      padding: 16px 16px 18px;
+      box-shadow: 0 10px 24px rgba(60, 40, 20, 0.04);
     }
-    .meta {
-      color: var(--muted);
-      font-size: 14px;
-      margin-bottom: 32px;
+    .bet:nth-child(2) { transform: translateY(10px); }
+    .bet h3 { margin: 0 0 8px; font-size: 16px; }
+    .bet p { margin: 0; color: #3f3a34; font-size: 14.5px; }
+    .boundary, .strip {
+      margin-top: 28px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
     }
-    h2 {
-      font-size: 15px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: #374151;
-      border-bottom: 1px solid var(--line);
-      padding-bottom: 8px;
-      margin: 28px 0 12px;
+    .works { display: grid; gap: 14px; }
+    .work h3 { margin: 0 0 4px; font-size: 16px; }
+    .work p { margin: 0; color: #3f3a34; }
+    video {
+      display: block;
+      width: min(100%, 760px);
+      margin-top: 12px;
+      background: #111;
+      border-radius: 8px;
     }
-    p, li { color: #374151; }
-    .empty { color: #9ca3af; }
-    @media (max-width: 640px) {
-      .page { margin: 0; padding: 32px 22px; box-shadow: none; }
+    .qrs { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 8px; }
+    .qrs figure { margin: 0; }
+    .qrs img { width: 148px; height: auto; background: #fff; border: 1px solid var(--line); }
+    .qrs figcaption { letter-spacing: 0; margin-top: 6px; }
+    @media (max-width: 800px) {
+      .bets { grid-template-columns: 1fr; }
+      .bet:nth-child(2) { transform: none; }
     }
   </style>
 </head>
 <body>
-  <main class="page">
-    <h1>姓名</h1>
-    <p class="meta">职位意向 · 城市 · 联系方式</p>
+  <main>
+    <header>
+      <h1>韩强</h1>
+      <p class="aka">焊枪</p>
+      <p class="lede">2026 年 3 月从 OpenClaw 的构建产物起步，运行时后来改成自己写的。参照过多种开源运行时，取舍写在自己的代码里。</p>
+      <p class="meta">南京 · 通用 Agent 框架</p>
+      <ul class="contact">
+        <li><a href="tel:18805199318">18805199318</a></li>
+        <li><a href="mailto:PowerfulGun@qq.com">PowerfulGun@qq.com</a></li>
+        <li><a href="https://github.com/PowerfulGun">github.com/PowerfulGun</a></li>
+      </ul>
+    </header>
 
-    <h2>简介</h2>
-    <p class="empty">在这里写一段简短介绍。</p>
+    <figure>
+      <figcaption>一条时间线</figcaption>
+      <div class="rail">
+        <svg viewBox="0 0 980 150" role="img" aria-label="从 OpenClaw 构建产物到自研运行时，中间做过向量记忆并放弃，桌面改由主模型直接操作，企业协作后来下线">
+          <line x1="70" y1="42" x2="910" y2="42" stroke="#d9d0c3" stroke-width="2" />
+          <g fill="#1c1915" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" text-anchor="middle">
+            <g>
+              <circle cx="70" cy="42" r="6" fill="#b4532a" />
+              <text x="70" y="74">2026.03</text>
+              <text x="70" y="94" fill="#6d655c">OpenClaw 产物</text>
+            </g>
+            <g>
+              <circle cx="238" cy="42" r="6" fill="#b4532a" />
+              <text x="238" y="74">随后</text>
+              <text x="238" y="94" fill="#6d655c">运行时自己写</text>
+            </g>
+            <g>
+              <circle cx="406" cy="42" r="6" fill="#b4532a" />
+              <text x="406" y="74">04–08 月</text>
+              <text x="406" y="94" fill="#6d655c">向量记忆</text>
+            </g>
+            <g>
+              <circle cx="574" cy="42" r="6" fill="#b4532a" />
+              <text x="574" y="74">09-11</text>
+              <text x="574" y="94" fill="#6d655c">改成文件记忆</text>
+            </g>
+            <g>
+              <circle cx="742" cy="42" r="6" fill="#b4532a" />
+              <text x="742" y="74">09-14</text>
+              <text x="742" y="94" fill="#6d655c">主模型点桌面</text>
+            </g>
+            <g>
+              <circle cx="910" cy="42" r="6" fill="#b4532a" />
+              <text x="910" y="74">11-18</text>
+              <text x="910" y="94" fill="#6d655c">协作下线</text>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </figure>
 
-    <h2>经历</h2>
-    <p class="empty">公司 / 时间 / 职责（待填写）</p>
+    <h2>三次押注</h2>
+    <div class="bets">
+      <article class="bet">
+        <h3>向量记忆做过，又拿掉了</h3>
+        <p>2026 年 4 月接入 Neural Memory，5 月把 embedding 收到一处，7 月 17 日移除 Neural Memory。8 月还有知识库联动。9 月 11 日改成一份 Markdown 长期记忆，加上词项时间线。热路径不再做 embedding。</p>
+      </article>
+      <article class="bet">
+        <h3>桌面由主模型自己点</h3>
+        <p>2026 年 9 月 14 日起，主模型直接调用桌面工具。同一个目标连续没有界面变化，就停。</p>
+      </article>
+      <article class="bet">
+        <h3>企业协作做完，然后收场</h3>
+        <p>2026 年 7 月做过编排控制面。11 月 18 日整段下线，局域网只留房间。</p>
+      </article>
+    </div>
 
-    <h2>项目</h2>
-    <p class="empty">项目名称与成果（待填写）</p>
+    <p class="boundary">动态产物不执行任意生成代码。厂商密钥不放在终端。</p>
 
-    <h2>技能</h2>
-    <p class="empty">技能列表（待填写）</p>
+    <section class="strip">
+      <h2>安全，以及一张旧证书</h2>
+      <p>Windows 驱动、终端采集、自保护。能跑命令、能点桌面的 Agent，约束来自做过检测的一侧。</p>
+      <p>CCIE Routing and Switching #57955，2017-12-13 取得。</p>
+    </section>
+
+    <section>
+      <h2>作品</h2>
+      <div class="works">
+        <article class="work">
+          <h3>SuperAI</h3>
+          <p>Windows 上自己写的通用 Agent 运行时。工具、桌面操作、按需读取的 Skill、一份长期记忆，入口不止一个。</p>
+        </article>
+        <article class="work">
+          <h3>樱桃</h3>
+          <p>办公客户端里，我负责局域网房间和界面，113 次提交。</p>
+        </article>
+        <article class="work">
+          <h3>桌宠</h3>
+          <p>陪伴向的桌面应用。下面是一段演示。</p>
+          <video controls preload="metadata" playsinline>
+            <source src="media/pet-demo.mp4" type="video/mp4" />
+          </video>
+        </article>
+        <article class="work">
+          <h3>Layerive</h3>
+          <p>2026 年 10 月做过这套本地修图工作台的安装与上架。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="strip">
+      <h2>也能在这些地方找到我</h2>
+      <div class="qrs">
+        <figure>
+          <img src="media/douyin.jpg" alt="抖音号 powerfulgun 的二维码" />
+          <figcaption>抖音 · powerfulgun</figcaption>
+        </figure>
+        <figure>
+          <img src="media/channels.jpg" alt="视频号二维码，账号名是焊枪" />
+          <figcaption>视频号 · 我是焊枪</figcaption>
+        </figure>
+      </div>
+    </section>
   </main>
 </body>
 </html>
