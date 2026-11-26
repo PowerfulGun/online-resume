@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>韩强 · 焊枪</title>
+  <title>韩强 · Windows AI Agent 工程师</title>
   <style>
     :root {
       --paper: #f3efe6;
@@ -25,7 +25,7 @@
     }
     main { max-width: 860px; margin: 0 auto; padding: 48px 22px 80px; }
     a { color: var(--ink); }
-    .who { margin-top: 64px; }
+    .who { margin: 0; }
     .who h1 {
       margin: 0;
       font-family: Palatino, "Palatino Linotype", "Songti SC", serif;
@@ -34,12 +34,23 @@
       letter-spacing: 0.04em;
       line-height: 1;
     }
-    .aka { margin: 10px 0 0; color: var(--copper); font-size: 15px; letter-spacing: 0.18em; }
+    .role {
+      margin: 12px 0 0;
+      color: var(--copper);
+      font-size: 18px;
+      letter-spacing: 0.04em;
+      font-weight: 650;
+    }
+    .aka { margin: 6px 0 0; color: var(--muted); font-size: 14px; letter-spacing: 0.12em; }
     .facts { margin: 14px 0 0; color: var(--muted); font-size: 15px; }
-    .lede { margin: 0; font-size: 18px; }
+    .lede { margin: 22px 0 0; font-size: 18px; }
     .lede p { margin: 0 0 12px; }
+    .lede p:last-child { margin-bottom: 0; }
     .contact { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 16px 0 0; padding: 0; list-style: none; }
-    .cert { margin: 28px 0 0; }
+    .contact a { color: var(--copper); }
+    .edu { margin: 8px 0 0; padding: 0; list-style: none; }
+    .edu li { margin: 0; }
+    .cert { margin: 12px 0 0; }
     .cert img {
       display: block;
       width: min(220px, 100%);
@@ -51,7 +62,9 @@
     h2 { margin: 48px 0 8px; font-size: 15px; letter-spacing: 0.16em; font-weight: 650; }
     .work { margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--line); }
     .work h3 { margin: 0 0 8px; font-size: 22px; font-weight: 650; }
-    .more { margin: -2px 0 12px; }
+    .work .value { margin: 0 0 6px; font-size: 17px; }
+    .work .mine { margin: 0 0 10px; color: var(--muted); font-size: 15px; }
+    .more { margin: 0 0 12px; }
     .more a { color: var(--copper); }
     .work p { margin: 0 0 12px; }
     .work ul { margin: 0 0 14px; padding-left: 1.2em; }
@@ -65,9 +78,11 @@
       border-radius: 8px;
       border: 1px solid var(--line);
     }
+    .extras .work h3 { font-size: 18px; }
+    .extras .work .value { font-size: 16px; }
     .qrs { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 12px; align-items: flex-start; }
     .qrs figure { margin: 0; }
-    .qrs img { width: min(220px, 100%); height: auto; background: #fff; border: 1px solid var(--line); border-radius: 0; }
+    .qrs img { width: min(180px, 100%); height: auto; background: #fff; border: 1px solid var(--line); border-radius: 0; }
     .qrs figcaption { margin-top: 6px; color: var(--muted); font-size: 14px; }
     .jobs { margin-top: 28px; padding-top: 8px; }
     .job { margin: 22px 0 0; }
@@ -79,88 +94,50 @@
 </head>
 <body>
   <main>
-    <header>
+    <header class="who">
+      <h1>韩强</h1>
+      <p class="role">Windows AI Agent 工程师</p>
+      <p class="aka">焊枪</p>
+      <p class="facts">29 岁 · 7 年经验 · 江苏南京 · 在职，1 个月内到岗</p>
+      <ul class="contact">
+        <li><a href="mailto:PowerfulGun@qq.com">PowerfulGun@qq.com</a></li>
+      </ul>
       <div class="lede">
-        <p>我是一个 AI Agent 程序员。我在 Windows 上做能帮人干活的 AI 助手，类似workbuddy。不是陪聊，是能点桌面、跑命令、把一件事办完。2025 年九月先做了各种小工具，然后做 AI 助手。</p>
-        <p>在这之前我写过windows驱动，也做过windows上的安全和自保护。AI 助手权限很大，所以我比较在意哪些事不能让它随便做。</p>
-        <p>往下翻是作品。樱桃 AI就是办公助手，Agent引擎是我写的，界面有同事一起。AI桌宠是我一个人做的，能戳、能聊，真要办事还是交给那套Agent引擎。修图那套不是我从零写的，我做的是安装包和上架。</p>
+        <p>我在 Windows 上做能把事办完的桌面 Agent：调工具、点桌面、跑命令，不是陪聊。类似 workbuddy 这类办公助手。</p>
+        <p>引擎叫 SuperAI。工具都先过同一道闸再执行；密钥放在公司网关，不进用户电脑；点桌面要先看当前屏幕，界面没变化就停，F9 可以立刻打断。</p>
+        <p>在这之前写过 Windows 驱动，也做过终端安全和自保护。Agent 权限很大，所以比较在意哪些事不能让它随便做。</p>
       </div>
     </header>
+
+    <section>
+      <h2>教育</h2>
+      <ul class="edu">
+        <li>南京航空航天大学 · 计算机科学与技术 · 自学本科 · 2015 – 2019</li>
+      </ul>
+    </section>
 
     <h2>作品</h2>
 
     <article class="work">
       <h3>樱桃 AI</h3>
-      <p class="more"><a href="cherry.html">看设计和流程、开发时间线</a></p>
-      <p>樱桃 AI 是一套办公助手。我负责背后的 Agent 引擎（SuperAI），以及一部分前端：局域网房间和「发给电脑」。整套办公界面不是我一个人做的。引擎负责调工具、点桌面、按需要读技能说明、记住用户的长期习惯。从 2026 年 3 月引擎起步，到 11 月收口局域网，按月写在设计和流程页里。</p>
+      <p class="value">Windows 上的办公助手：把一件事办完，而不是陪着聊。</p>
+      <p class="mine">我负责 Agent 引擎 SuperAI，以及局域网房间和对话里的「发给电脑」。办公主界面是同事做的。</p>
+      <p class="more"><a href="cherry.html">设计和流程、开发时间线</a></p>
       <video controls preload="metadata" playsinline width="1220" height="784">
         <source src="media/cherry-demo.mp4" type="video/mp4" />
       </video>
     </article>
 
-    <article class="work">
-      <h3>AI桌宠</h3>
-      <p class="more"><a href="pet.html">看设计和流程、开发时间线</a></p>
-      <p>电脑上的桌面宠物，我独自开发。2026 年 9 月 29 日立仓，10 月 29 日发到版本 2026.10.29，仓库 48 次提交。能点、能动、能跳舞，有自己的性格和好感度。下面是界面和录屏。</p>
-      <img class="shot" src="media/pet-ui.jpg" alt="樱桃陪伴：桌面上的人物模型和语音对话窗口" />
-      <video controls preload="metadata" playsinline width="1280" height="720">
-        <source src="media/pet-demo.mp4" type="video/mp4" />
-      </video>
-    </article>
-
-    <article class="work">
-      <h3>其他上架应用</h3>
-      <p>公司应用商店里还有一批我独自做并上线的小工具，包括桌面壁纸、摸鱼面板、文本编译器、软件搬家、视频去场、C 盘清理、文件助手、助手日历。下表是跟进记录。</p>
-      <img class="shot" src="media/store-apps.png" alt="虎踞龙盘工具跟进表：上线的独立应用、时间和负责人" />
-    </article>
-
-    <article class="work">
-      <h3>Layerive</h3>
-      <p>装在自己电脑上的AI修图工具。改字、换一块区域、抠素材、把画面往外扩，都会留在同一个项目里，方便回看，而不是散在聊天记录里。我做的是安装包、UI替换、用户系统接入和上架。</p>
-      <img class="shot" src="media/layerive.png" alt="Layerive 工作台：左侧是版本历史，中间是正在编辑的图片，右侧是项目对话" />
-    </article>
-
-    <section class="work">
-      <h2>也能在这些地方找到我</h2>
-      <div class="qrs">
-        <figure>
-          <img src="media/douyin.jpg" alt="抖音号 powerfulgun 的二维码" />
-          <figcaption><a href="https://v.douyin.com/lnVoXdXqY1o/">抖音作品 · powerfulgun</a></figcaption>
-        </figure>
-        <figure>
-          <img src="media/channels.jpg" alt="视频号二维码，账号名是焊枪" />
-          <figcaption>视频号 · 我是焊枪</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <section class="who">
-      <h1>韩强</h1>
-      <p class="aka">焊枪</p>
-      <p class="facts">29 岁 · 7 年经验 · 求职意向 AI · 江苏南京 · 20–30 千/月<br />在职找工作，1 个月内到岗</p>
-      <ul class="contact">
-        <li><a href="tel:+8618805199318">18805199318</a></li>
-        <li><a href="mailto:PowerfulGun@qq.com">PowerfulGun@qq.com</a></li>
-      </ul>
-      <figure class="cert">
-        <img src="media/ccie.jpg" alt="韩强的 CCIE Routing and Switching 证书，编号 57955，2017 年 12 月 13 日" />
-        <figcaption>CCIE Routing and Switching #57955，2017-12-13 取得。</figcaption>
-      </figure>
-    </section>
-
     <section class="jobs">
       <h2>工作经历</h2>
 
       <article class="job">
-        <h3>南京虎踞龙盘智慧科技有限公司 · AI 助手</h3>
+        <h3>南京虎踞龙盘智慧科技有限公司 · Windows AI Agent 工程师</h3>
         <p class="when">2025.9 – 至今</p>
         <ul>
-          <li>2025 年 9 月先做了一批独立小工具并上架，然后做樱桃 AI。</li>
-          <li>2026 年 3 月引擎仓库起步：用现成包先跑通，4–6 月把编排、工具出口、桌面点击和密钥网关一段段换成自己写的。</li>
-          <li>2026 年 7 月客户端仓库起步。我负责 SuperAI 引擎，以及引擎和客户端之间的 Pipe；办公主界面是同事做的。</li>
-          <li>2026 年 9 月：长期记忆改成本地文件，点桌面改由主模型下指令，浏览器窗口改由客户端开。</li>
-          <li>2026 年 9 月 29 日起独自做 AI 桌宠（樱桃陪伴）：壁纸层三维角色、云端实时语音、好感与人设；办事交给同一套办公引擎。10 月 29 日发到 2026.10.29。按提交拆开的时间线在桌宠那一页。</li>
-          <li>2026 年 11 月做局域网房间和「发给电脑」；企业协作整套下线，只留房间。按月拆开的设计和流程在樱桃 AI 那一页。</li>
+          <li>场景：要在 Windows 上做能调工具、点桌面、把事办完的办公助手，权限很大，不能让模型直接动手。</li>
+          <li>做法：我写 SuperAI 引擎。工具走统一出口，先校验路径和权限再执行；调用模型的密钥放在公司网关，不进用户电脑；点桌面由主模型看过当前屏幕再下指令，界面没变化就停，进行中可按 F9 停掉；技能说明按需读取；长期记忆写在用户本机一份文件里，只有这一轮成功才写入。引擎和客户端之间用 Pipe；办公主界面是同事做的。2026 年 11 月做了局域网房间和「发给电脑」，企业协作整套下线，只留房间。</li>
+          <li>结果：2026 年 3 月引擎仓库起步，4–6 月把编排、工具出口、桌面点击和密钥网关从现成包换成自己写的；7 月接到客户端；11 月收口局域网。更细的按月记录在樱桃 AI 那一页。</li>
         </ul>
       </article>
 
@@ -168,8 +145,9 @@
         <h3>江苏深网科技有限公司 · Windows C++ 开发</h3>
         <p class="when">2025.3 – 2025.9</p>
         <ul>
-          <li>按需求改 Windows 工具，用过 Python 和 Qt。</li>
-          <li>分析过国外电脑安全软件怎么工作，做测试和文档。</li>
+          <li>场景：按产品需求改 Windows 工具，并要把国外电脑安全软件怎么工作说清楚。</li>
+          <li>做法：用 C++、Python 和 Qt 改工具；拆别人的产品做测试，把行为和边界写成文档。</li>
+          <li>结果：需求按期交付，分析结论留给测试和后续开发用。半年后转到做桌面 Agent。</li>
         </ul>
       </article>
 
@@ -177,10 +155,9 @@
         <h3>北信源系统集成有限公司 · Windows C++ 开发</h3>
         <p class="when">2021.1 – 2025.3</p>
         <ul>
-          <li>参与过攻防研究和扫雷类检测项目，写扫描策略。</li>
-          <li>Win7 停更后的防护：看过漏洞复现，写过虚拟补丁策略。</li>
-          <li>Windows 终端安全产品：采集注册表和入侵相关数据，帮用户看告警、分误报。</li>
-          <li>产品送检时做过自保护。改过 ARP 阻断工具，并写了相关原理专利。也做过一些 Windows 小工具、预研和排错。</li>
+          <li>场景：终端安全产品要采集入侵相关数据、处理告警，Win7 停更后还要补防护；产品送检时进程不能被随便干掉。</li>
+          <li>做法：写扫雷类检测的扫描策略；对着漏洞复现写虚拟补丁；采集注册表和入侵相关数据，帮用户看告警、分误报；送检阶段做自保护；改过 ARP 阻断工具并写了相关原理专利。也做过 Windows 小工具、预研和排错。</li>
+          <li>结果：策略和采集进了终端安全产品；送检时自保护可用；ARP 阻断留下原理专利。这四年也是后来给 Agent 设闸门的原因：权限大的程序，要先规定不能做什么。</li>
         </ul>
       </article>
 
@@ -188,8 +165,9 @@
         <h3>杭州顺网科技股份有限公司 · 驱动开发</h3>
         <p class="when">2020.7 – 2020.12</p>
         <ul>
-          <li>维护已有驱动、改问题、加功能，当时完成过 6 个需求，另外自己写了 2 个新驱动。</li>
-          <li>处理客户在线问题，当时处理过 20 多例。</li>
+          <li>场景：网吧/客户现场的 Windows 驱动要继续能用，出问题要当天能回。</li>
+          <li>做法：维护已有驱动、改问题、加功能；自己写新驱动；处理客户在线问题。</li>
+          <li>结果：完成 6 个需求，新写 2 个驱动，处理客户问题 20 多例。</li>
         </ul>
       </article>
 
@@ -197,7 +175,9 @@
         <h3>南京网太阁络网络科技有限公司 · 助教</h3>
         <p class="when">2020.3 – 2020.6</p>
         <ul>
-          <li>调试网络设备，帮学员答疑、带实验，整理文案和教学安排。</li>
+          <li>场景：学员做思科和网络实验，设备经常卡住，需要有人在现场盯。</li>
+          <li>做法：调试网络设备，答疑、带实验，整理文案和教学安排。</li>
+          <li>结果：实验能按课表做完，学员问题当天消化。</li>
         </ul>
       </article>
 
@@ -205,10 +185,64 @@
         <h3>南京云达教育 · 助教</h3>
         <p class="when">2019.9 – 2020.2</p>
         <ul>
-          <li>协助讲师授课，内容是思科和网络培训。</li>
+          <li>场景：思科和网络培训课，讲师需要助教盯设备和练习。</li>
+          <li>做法：协助授课、带实验。</li>
+          <li>结果：课程按计划推进。</li>
         </ul>
       </article>
     </section>
+
+    <section class="extras">
+      <h2>附加</h2>
+
+      <article class="work">
+        <h3>AI桌宠</h3>
+        <p class="value">桌面上的三维角色，能戳、能聊；真要办事，交给同一套办公引擎。</p>
+        <p class="mine">我独自开发。2026.9.29 立仓，10.29 发到版本 2026.10.29，仓库 48 次提交。</p>
+        <p class="more"><a href="pet.html">设计和流程、开发时间线</a></p>
+        <img class="shot" src="media/pet-ui.jpg" alt="樱桃陪伴：桌面上的人物模型和语音对话窗口" />
+        <video controls preload="metadata" playsinline width="1280" height="720">
+          <source src="media/pet-demo.mp4" type="video/mp4" />
+        </video>
+      </article>
+
+      <article class="work">
+        <h3>其他上架应用</h3>
+        <p class="value">进樱桃 AI 之前，先在公司商店上架一批独立小工具。</p>
+        <p class="mine">我独自做并上线：桌面壁纸、摸鱼面板、文本编译器、软件搬家、视频去场、C 盘清理、文件助手、助手日历。</p>
+        <img class="shot" src="media/store-apps.png" alt="虎踞龙盘工具跟进表：上线的独立应用、时间和负责人" />
+      </article>
+
+      <article class="work">
+        <h3>Layerive</h3>
+        <p class="value">装在自己电脑上的 AI 修图：改字、换区域、抠图、外扩，都留在同一个项目里。</p>
+        <p class="mine">不是从零写的。我做安装包、UI 替换、用户系统接入和上架。</p>
+        <img class="shot" src="media/layerive.png" alt="Layerive 工作台：左侧是版本历史，中间是正在编辑的图片，右侧是项目对话" />
+      </article>
+
+      <article class="work">
+        <h3>也能在这些地方找到我</h3>
+        <div class="qrs">
+          <figure>
+            <img src="media/douyin.jpg" alt="抖音号 powerfulgun 的二维码" />
+            <figcaption><a href="https://v.douyin.com/lnVoXdXqY1o/">抖音作品 · powerfulgun</a></figcaption>
+          </figure>
+          <figure>
+            <img src="media/channels.jpg" alt="视频号二维码，账号名是焊枪" />
+            <figcaption>视频号 · 我是焊枪</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <article class="work">
+        <h3>证书</h3>
+        <figure class="cert">
+          <img src="media/ccie.jpg" alt="韩强的 CCIE Routing and Switching 证书，编号 57955，2017 年 12 月 13 日" />
+          <figcaption>CCIE Routing and Switching #57955，2017-12-13 取得。</figcaption>
+        </figure>
+      </article>
+    </section>
   </main>
+  <script src="bgm.js" defer></script>
 </body>
 </html>
