@@ -1,5 +1,6 @@
 (function () {
   var KEY = "resume-bgm-off";
+  var POS_KEY = "resume-bgm-t";
   var TARGET = 0.35;
   var FADE_OUT_MS = 700;
   var FADE_IN_MS = 1400;
@@ -32,8 +33,8 @@
   var ducked = false;
   var fadeToken = 0;
   var resumeTimer = 0;
-  var videos = [];
   var waitingGesture = false;
+  var navigating = false;
 
   function label() {
     var off = userStopped || (audio.paused && !ducked);
@@ -42,9 +43,29 @@
   }
 
   function videoPlaying() {
-    return videos.some(function (v) {
+    return Array.prototype.some.call(document.querySelectorAll("video"), function (v) {
       return !v.paused && !v.ended;
     });
+  }
+
+  function savedPos() {
+    var t = parseFloat(sessionStorage.getItem(POS_KEY) || "0");
+    return t > 0.25 && isFinite(t) ? t : 0;
+  }
+
+  function savePos() {
+    if (userStopped) return;
+    try {
+      sessionStorage.setItem(POS_KEY, String(audio.currentTime || 0));
+    } catch (err) {}
+  }
+
+  function restorePos() {
+    var t = savedPos();
+    if (!t) return;
+    try {
+      audio.currentTime = t;
+    } catch (err) {}
   }
 
   function cancelFade() {
@@ -97,7 +118,7 @@
     if (userStopped || !audio.paused) return;
     if (e.target && e.target.closest && e.target.closest(".bgm-btn")) return;
     disarmGesture();
-    playUser();
+    playUser({ fade: !savedPos() });
   }
 
   function armGesture() {
@@ -115,7 +136,7 @@
   }
 
   function duckForVideo() {
-    if (userStopped) return;
+    if (userStopped || navigating) return;
     cancelResume();
     if (ducked && audio.volume <= 0.02) {
       label();
@@ -144,7 +165,7 @@
   }
 
   function scheduleUnduck() {
-    if (userStopped || videoPlaying()) return;
+    if (userStopped || navigating || videoPlaying()) return;
     cancelResume();
     resumeTimer = setTimeout(unduck, RESUME_DELAY_MS);
   }
@@ -154,16 +175,19 @@
     cancelResume();
   }
 
-  function playUser() {
+  function playUser(opts) {
+    var fade = !opts || opts.fade !== false;
     userStopped = false;
     ducked = false;
     sessionStorage.removeItem(KEY);
     cancelResume();
     disarmGesture();
-    audio.volume = 0;
+    restorePos();
+    if (fade) audio.volume = 0;
+    else audio.volume = TARGET;
     playThen(function () {
       if (userStopped) return;
-      fadeTo(TARGET, FADE_IN_MS, label);
+      if (fade) fadeTo(TARGET, FADE_IN_MS, label);
       label();
     }, armGesture);
     label();
@@ -173,6 +197,7 @@
     userStopped = true;
     ducked = false;
     sessionStorage.setItem(KEY, "1");
+    sessionStorage.removeItem(POS_KEY);
     cancelResume();
     disarmGesture();
     fadeTo(0, 280, function () {
@@ -185,8 +210,83 @@
     label();
   }
 
+  function resumeFile(url) {
+    var u;
+    try {
+      u = new URL(url, location.href);
+    } catch (err) {
+      return null;
+    }
+    if (u.origin !== location.origin) return null;
+    var parts = u.pathname.split("/").filter(Boolean);
+    var file = parts[parts.length - 1] || "index.html";
+    if (file === "cherry" || file === "cherry.html") return "cherry.html";
+    if (file === "pet" || file === "pet.html") return "pet.html";
+    if (file === "index.html" || file === "index") return "index.html";
+    if (!/\./.test(file)) return "index.html";
+    return null;
+  }
+
+  function leaveVideoDuck() {
+    cancelResume();
+    if (userStopped) return;
+    if (ducked || audio.paused) {
+      ducked = false;
+      if (audio.paused) {
+        audio.volume = TARGET;
+        playThen(label, armGesture);
+      } else {
+        fadeTo(TARGET, 400, label);
+      }
+      label();
+    }
+  }
+
+  function applyPage(doc, href, push) {
+    var nextStyle = doc.querySelector("head style");
+    var curStyle = document.querySelector("head style");
+    if (nextStyle) {
+      var imported = document.importNode(nextStyle, true);
+      if (curStyle) curStyle.replaceWith(imported);
+      else document.head.insertBefore(imported, style);
+    }
+    var nextMain = doc.querySelector("main");
+    var curMain = document.querySelector("main");
+    if (!nextMain || !curMain) return false;
+    curMain.replaceWith(document.importNode(nextMain, true));
+    document.title = doc.title || document.title;
+    if (push) history.pushState({ resumeNav: 1 }, "", href);
+    window.scrollTo(0, 0);
+    leaveVideoDuck();
+    return true;
+  }
+
+  function go(href, push) {
+    var url = new URL(href, location.href).href;
+    if (push && url === location.href) return;
+    navigating = true;
+    fetch(url, { credentials: "same-origin" })
+      .then(function (res) {
+        if (!res.ok) throw new Error("nav");
+        return res.text();
+      })
+      .then(function (html) {
+        var doc = new DOMParser().parseFromString(html, "text/html");
+        if (!applyPage(doc, url, push)) throw new Error("nav");
+      })
+      .catch(function () {
+        savePos();
+        location.href = url;
+      })
+      .then(function () {
+        setTimeout(function () {
+          navigating = false;
+        }, 50);
+      });
+  }
+
   btn.addEventListener("click", function () {
-    if (userStopped || (audio.paused && !ducked)) playUser();
+    if (userStopped || (audio.paused && !ducked)) playUser({ fade: true });
     else stopUser();
   });
 
@@ -194,35 +294,103 @@
     disarmGesture();
     label();
   });
-  audio.addEventListener("pause", label);
+  audio.addEventListener("pause", function () {
+    savePos();
+    label();
+  });
+  audio.addEventListener("timeupdate", savePos);
+  audio.addEventListener("loadedmetadata", restorePos);
+  window.addEventListener("pagehide", savePos);
 
-  videos = Array.prototype.slice.call(document.querySelectorAll("video"));
-  videos.forEach(function (video) {
-    video.addEventListener("play", duckForVideo);
-    video.addEventListener("waiting", keepDuckedThroughStall);
-    video.addEventListener("stalled", keepDuckedThroughStall);
-    video.addEventListener("seeking", keepDuckedThroughStall);
-    video.addEventListener("playing", function () {
-      if (!video.paused && !video.ended) keepDuckedThroughStall();
-    });
-    video.addEventListener("pause", function () {
-      if (video.seeking || !video.paused) return;
+  document.addEventListener(
+    "play",
+    function (e) {
+      if (e.target && e.target.tagName === "VIDEO") duckForVideo();
+    },
+    true
+  );
+  document.addEventListener(
+    "waiting",
+    function (e) {
+      if (e.target && e.target.tagName === "VIDEO") keepDuckedThroughStall();
+    },
+    true
+  );
+  document.addEventListener(
+    "stalled",
+    function (e) {
+      if (e.target && e.target.tagName === "VIDEO") keepDuckedThroughStall();
+    },
+    true
+  );
+  document.addEventListener(
+    "seeking",
+    function (e) {
+      if (e.target && e.target.tagName === "VIDEO") keepDuckedThroughStall();
+    },
+    true
+  );
+  document.addEventListener(
+    "playing",
+    function (e) {
+      if (e.target && e.target.tagName === "VIDEO" && !e.target.paused && !e.target.ended) {
+        keepDuckedThroughStall();
+      }
+    },
+    true
+  );
+  document.addEventListener(
+    "pause",
+    function (e) {
+      if (!e.target || e.target.tagName !== "VIDEO") return;
+      if (navigating) return;
+      if (e.target.seeking || !e.target.paused) return;
       scheduleUnduck();
-    });
-    video.addEventListener("ended", scheduleUnduck);
+    },
+    true
+  );
+  document.addEventListener(
+    "ended",
+    function (e) {
+      if (e.target && e.target.tagName === "VIDEO") scheduleUnduck();
+    },
+    true
+  );
+
+  document.addEventListener(
+    "click",
+    function (e) {
+      if (e.defaultPrevented || e.button !== 0) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      var a = e.target.closest ? e.target.closest("a") : null;
+      if (!a || !a.href) return;
+      if (a.target && a.target !== "_self") return;
+      if (!resumeFile(a.href)) return;
+      var dest = new URL(a.href, location.href);
+      if (dest.pathname === location.pathname && dest.search === location.search) return;
+      e.preventDefault();
+      go(dest.href, true);
+    },
+    true
+  );
+
+  window.addEventListener("popstate", function () {
+    go(location.href, false);
   });
 
   document.body.appendChild(audio);
   document.body.appendChild(btn);
+  history.replaceState({ resumeNav: 1 }, "", location.href);
   label();
   if (userStopped) {
     audio.pause();
     label();
   } else {
-    playUser();
+    playUser({ fade: !savedPos() });
     audio.addEventListener("canplay", function onReady() {
       audio.removeEventListener("canplay", onReady);
-      if (!userStopped && audio.paused) playUser();
+      restorePos();
+      if (!userStopped && audio.paused) playUser({ fade: false });
     });
   }
 })();
