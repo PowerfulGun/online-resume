@@ -25,7 +25,8 @@
     }
     main { max-width: 860px; margin: 0 auto; padding: 48px 22px 80px; }
     a { color: var(--ink); }
-    header h1 {
+    .who { margin-top: 64px; }
+    .who h1 {
       margin: 0;
       font-family: Palatino, "Palatino Linotype", "Songti SC", serif;
       font-size: clamp(42px, 7vw, 68px);
@@ -35,7 +36,7 @@
     }
     .aka { margin: 10px 0 0; color: var(--copper); font-size: 15px; letter-spacing: 0.18em; }
     .facts { margin: 14px 0 0; color: var(--muted); font-size: 15px; }
-    .lede { margin: 22px 0 0; font-size: 18px; }
+    .lede { margin: 0; font-size: 18px; }
     .lede p { margin: 0 0 12px; }
     .contact { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 8px 0 0; padding: 0; list-style: none; }
     .cert { margin: 28px 0 0; }
@@ -69,7 +70,7 @@
     .qrs figure { margin: 0; }
     .qrs img { width: min(220px, 100%); height: auto; background: #fff; border: 1px solid var(--line); border-radius: 0; }
     .qrs figcaption { margin-top: 6px; color: var(--muted); font-size: 14px; }
-    .jobs { margin-top: 48px; padding-top: 8px; }
+    .jobs { margin-top: 28px; padding-top: 8px; }
     .job { margin: 22px 0 0; }
     .job h3 { margin: 0; font-size: 17px; font-weight: 650; }
     .job .when { margin: 4px 0 8px; color: var(--muted); font-size: 14px; }
@@ -80,9 +81,6 @@
 <body>
   <main>
     <header>
-      <h1>韩强</h1>
-      <p class="aka">焊枪</p>
-      <p class="facts">29 岁 · 7 年经验 · 求职意向 AI · 江苏南京 · 20–30 千/月<br />在职找工作，1 个月内到岗</p>
       <div class="lede">
         <p>我在 Windows 上做能帮人干活的 AI 助手。今年 3 月先用 OpenClaw 的现成包跑起来，后来把核心一段段换成自己写的。</p>
         <p>在这之前我写过 Windows 驱动，做过电脑上的安全采集和自保护。助手能操作电脑、能跑命令，所以哪些事不能让它随便做，我比较在意。</p>
@@ -149,6 +147,12 @@
           <figcaption>视频号 · 我是焊枪</figcaption>
         </figure>
       </div>
+    </section>
+
+    <section class="who">
+      <h1>韩强</h1>
+      <p class="aka">焊枪</p>
+      <p class="facts">29 岁 · 7 年经验 · 求职意向 AI · 江苏南京 · 20–30 千/月<br />在职找工作，1 个月内到岗</p>
     </section>
 
     <section class="jobs">
