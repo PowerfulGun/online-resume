@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>樱桃 AI · 韩强</title>
+  <style>
+    :root {
+      --paper: #f3efe6;
+      --ink: #1c1915;
+      --muted: #6d655c;
+      --line: #d9d0c3;
+      --copper: #b4532a;
+      --card: #fffdf8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 400px at 10% -10%, rgba(180, 83, 42, 0.08), transparent 50%),
+        var(--paper);
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.65;
+    }
+    main { max-width: 860px; margin: 0 auto; padding: 36px 22px 80px; }
+    a { color: var(--copper); }
+    .back { margin: 0 0 22px; }
+    h1 {
+      margin: 0;
+      font-family: Palatino, "Palatino Linotype", "Songti SC", serif;
+      font-size: clamp(36px, 6vw, 52px);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      line-height: 1.15;
+    }
+    .kicker { margin: 10px 0 0; color: var(--muted); font-size: 15px; }
+    .lead { margin: 22px 0 0; font-size: 18px; }
+    .lead p { margin: 0 0 12px; }
+    h2 { margin: 42px 0 8px; font-size: 15px; letter-spacing: 0.16em; font-weight: 650; }
+    p { margin: 0 0 12px; }
+    ul { margin: 8px 0 0; padding-left: 1.2em; }
+    li { margin: 0 0 8px; }
+    .diagram { margin: 16px 0 0; }
+    .diagram svg { display: block; width: 100%; height: auto; }
+    .diagram figcaption { margin-top: 8px; color: var(--muted); font-size: 14px; }
+    .diagram .box { fill: var(--card); stroke: var(--copper); stroke-width: 1.6; }
+    .diagram text {
+      fill: var(--ink);
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      font-size: 15px;
+    }
+    .diagram .sub { fill: var(--muted); font-size: 12.5px; }
+    .diagram .arrow { stroke: var(--copper); stroke-width: 1.6; fill: none; }
+    video {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin-top: 8px;
+      background: #111;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+    }
+    .boundary { margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="back"><a href="index.html">返回简历</a></p>
+    <header>
+      <h1>樱桃 AI</h1>
+      <p class="kicker">引擎和局域网。办公界面是团队一起做的。</p>
+      <div class="lead">
+        <p>樱桃 AI 是一套 Windows 上的办公助手。整套办公界面不是我一个人做的。我负责背后的引擎，叫 SuperAI：一轮对话怎么开始、工具怎么调、桌面怎么点、长期习惯记在哪。客户端负责窗口、账号，以及把引擎拉起来。</p>
+        <p>另外我做了局域网房间，和对话里的「发给电脑」。房间那一页也有同事一起改过。语音控制整页、拓展目录界面，主要是同事做的，下面不写成我的作品。</p>
+        <p>调用大模型的密钥放在服务器上，不放在用户电脑里。要打开浏览器时，窗口是客户端开的，引擎只发请求、把结果收回来。</p>
+      </div>
+    </header>
+
+    <section>
+      <h2>怎么叠在一起</h2>
+      <figure class="diagram">
+        <svg viewBox="0 0 440 400" role="img">
+          <title>客户端、引擎，以及引擎里的三件事</title>
+          <defs>
+            <marker id="c-arr" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#b4532a" />
+            </marker>
+          </defs>
+          <rect class="box" x="50" y="12" width="340" height="72" rx="8" />
+          <text x="220" y="42" text-anchor="middle">樱桃客户端</text>
+          <text class="sub" x="220" y="64" text-anchor="middle">窗口和账号，把引擎拉起来</text>
+          <line class="arrow" x1="220" y1="84" x2="220" y2="112" marker-end="url(#c-arr)" />
+          <rect class="box" x="50" y="116" width="340" height="72" rx="8" />
+          <text x="220" y="146" text-anchor="middle">SuperAI 引擎</text>
+          <text class="sub" x="220" y="168" text-anchor="middle">我写的。对话怎么走，在这里</text>
+          <line class="arrow" x1="80" y1="188" x2="80" y2="228" marker-end="url(#c-arr)" />
+          <line class="arrow" x1="220" y1="188" x2="220" y2="228" marker-end="url(#c-arr)" />
+          <line class="arrow" x1="360" y1="188" x2="360" y2="228" marker-end="url(#c-arr)" />
+          <rect class="box" x="16" y="232" width="128" height="88" rx="8" />
+          <text x="80" y="268" text-anchor="middle">工具</text>
+          <text class="sub" x="80" y="292" text-anchor="middle">同一处出去</text>
+          <rect class="box" x="156" y="232" width="128" height="88" rx="8" />
+          <text x="220" y="268" text-anchor="middle">点桌面</text>
+          <text class="sub" x="220" y="292" text-anchor="middle">看过屏幕再点</text>
+          <rect class="box" x="296" y="232" width="128" height="88" rx="8" />
+          <text x="360" y="268" text-anchor="middle">长期记忆</text>
+          <text class="sub" x="360" y="292" text-anchor="middle">一份本地文件</text>
+        </svg>
+        <figcaption>局域网不走这条对话。它在本机单独走房间，把活发给另一台电脑。</figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <h2>一轮对话</h2>
+      <figure class="diagram">
+        <svg viewBox="0 0 440 700" role="img">
+          <title>一轮对话从进来到收尾</title>
+          <defs>
+            <marker id="c-arr2" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#b4532a" />
+            </marker>
+          </defs>
+          <rect class="box" x="50" y="12" width="340" height="70" rx="8" />
+          <text x="220" y="42" text-anchor="middle">这一轮从哪进来</text>
+          <text class="sub" x="220" y="64" text-anchor="middle">客户端送进来，或直接在命令行问</text>
+          <line class="arrow" x1="220" y1="82" x2="220" y2="106" marker-end="url(#c-arr2)" />
+          <rect class="box" x="50" y="110" width="340" height="70" rx="8" />
+          <text x="220" y="140" text-anchor="middle">记下这一轮开始</text>
+          <text class="sub" x="220" y="162" text-anchor="middle">做到哪一步、什么时候结束</text>
+          <line class="arrow" x1="220" y1="180" x2="220" y2="204" marker-end="url(#c-arr2)" />
+          <rect class="box" x="50" y="208" width="340" height="70" rx="8" />
+          <text x="220" y="238" text-anchor="middle">有写好的步骤，能办完吗</text>
+          <text class="sub" x="220" y="260" text-anchor="middle">能办完，就不必再问模型</text>
+          <line class="arrow" x1="160" y1="278" x2="116" y2="312" marker-end="url(#c-arr2)" />
+          <line class="arrow" x1="280" y1="278" x2="324" y2="312" marker-end="url(#c-arr2)" />
+          <rect class="box" x="24" y="316" width="184" height="78" rx="8" />
+          <text x="116" y="348" text-anchor="middle">能办完</text>
+          <text class="sub" x="116" y="370" text-anchor="middle">按步骤做完</text>
+          <rect class="box" x="232" y="316" width="184" height="78" rx="8" />
+          <text x="324" y="348" text-anchor="middle">不能</text>
+          <text class="sub" x="324" y="370" text-anchor="middle">带上记忆，问模型</text>
+          <line class="arrow" x1="324" y1="394" x2="324" y2="424" marker-end="url(#c-arr2)" />
+          <rect class="box" x="232" y="428" width="184" height="92" rx="8" />
+          <text x="324" y="460" text-anchor="middle">要用工具</text>
+          <text class="sub" x="324" y="482" text-anchor="middle">执行后把结果交回</text>
+          <text class="sub" x="324" y="500" text-anchor="middle">再问，直到不用了</text>
+          <line class="arrow" x1="116" y1="394" x2="116" y2="548" />
+          <line class="arrow" x1="324" y1="520" x2="324" y2="548" />
+          <line class="arrow" x1="116" y1="548" x2="324" y2="548" />
+          <line class="arrow" x1="220" y1="548" x2="220" y2="578" marker-end="url(#c-arr2)" />
+          <rect class="box" x="50" y="582" width="340" height="92" rx="8" />
+          <text x="220" y="614" text-anchor="middle">收尾</text>
+          <text class="sub" x="220" y="636" text-anchor="middle">不再要工具，也没有新的插话</text>
+          <text class="sub" x="220" y="654" text-anchor="middle">成功才写入长期记忆</text>
+        </svg>
+        <figcaption>左边按写好的步骤做完，直接收尾。右边问模型；要工具就转一圈。待办还没做完时，会再催一次，催到头仍没做完，就标成没完成，不假装做完。</figcaption>
+      </figure>
+      <ul>
+        <li>工具都从同一处出去：先看路径对不对、这件事能不能做，再真正执行。</li>
+        <li>点桌面由主模型看过当前屏幕后自己下指令，不另开一个小助手去点。点了界面没有变化就停。正在点的时候可以按 F9 停掉。</li>
+        <li>技能说明不会每句话都自动塞进来。先搜到，需要时再整篇读一次，然后按说明去调工具。</li>
+        <li>很短的命令当场等结果。跑得久的先等一小会，超时就放到后台；做完之后，如果这轮还在，再把结果送回来。</li>
+        <li>长期记住的东西写在用户电脑上的一份文件里，不是向量库。向量检索试过几个月，后来从日常对话里拿掉了。每次开口会带上这份文件里截过的一段。只有这一轮成功做完，才写入三类：你纠正过的说法、一件可以长期记的事实、一个问题最后是怎么解决的。中途停掉或出错，不写。</li>
+        <li>可以派一个只干一件事的子任务，等它做完再收回来，也可以先放在后台。你中途打的字，会在下一步进到当前这一轮，不把正在说的那段掐断。要立刻停，走停止。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>局域网</h2>
+      <p>同一局域网里，可以把这一轮交给另一台电脑上的助手。对面用那台电脑自己的引擎跑，不经过你这台正在用的对话。今年 7 月做过一套公司内部的多人协作，11 月整套下线，现在只留房间。</p>
+      <figure class="diagram">
+        <svg viewBox="0 0 440 560" role="img">
+          <title>发给另一台电脑</title>
+          <defs>
+            <marker id="c-arr3" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#b4532a" />
+            </marker>
+          </defs>
+          <rect class="box" x="50" y="12" width="340" height="68" rx="8" />
+          <text x="220" y="42" text-anchor="middle">扫描附近的电脑</text>
+          <text class="sub" x="220" y="64" text-anchor="middle">只在同一个局域网里</text>
+          <line class="arrow" x1="220" y1="80" x2="220" y2="104" marker-end="url(#c-arr3)" />
+          <rect class="box" x="50" y="108" width="340" height="68" rx="8" />
+          <text x="220" y="148" text-anchor="middle">建房间，或凭邀请加入</text>
+          <line class="arrow" x1="220" y1="176" x2="220" y2="200" marker-end="url(#c-arr3)" />
+          <rect class="box" x="50" y="204" width="340" height="68" rx="8" />
+          <text x="220" y="234" text-anchor="middle">对话里发给其中一台</text>
+          <text class="sub" x="220" y="256" text-anchor="middle">入口就叫「发给电脑」</text>
+          <line class="arrow" x1="220" y1="272" x2="220" y2="296" marker-end="url(#c-arr3)" />
+          <rect class="box" x="50" y="300" width="340" height="78" rx="8" />
+          <text x="220" y="332" text-anchor="middle">那台用自己的引擎干活</text>
+          <text class="sub" x="220" y="354" text-anchor="middle">不走你这台正在用的对话</text>
+          <line class="arrow" x1="220" y1="378" x2="220" y2="402" marker-end="url(#c-arr3)" />
+          <rect class="box" x="50" y="406" width="340" height="68" rx="8" />
+          <text x="220" y="446" text-anchor="middle">进度回到你这边看</text>
+        </svg>
+        <figcaption>房间只负责把活送过去、把过程带回来。真正办事的仍是那台电脑上的引擎。</figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <h2>演示</h2>
+      <video controls preload="metadata" playsinline width="1220" height="784">
+        <source src="media/cherry-demo.mp4" type="video/mp4" />
+      </video>
+    </section>
+
+    <section>
+      <h2>边界</h2>
+      <ul class="boundary">
+        <li>办公界面不是我独做的。语音控制整页、拓展目录界面，主要是同事的。局域网房间页也有同事一起提交，我做的是引擎，以及「发给电脑」这条链路。</li>
+        <li>模型做出的文件，引擎只记下在哪，不拿来展示，也不在电脑上当程序跑。这不是一套把所有生成网页都隔离开的沙箱。</li>
+        <li>日常工具放行比较多。需要确认的时候会问客户端。不是每一步都弹窗，也不是完全不问。</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
