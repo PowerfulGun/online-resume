@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>桌宠 · 韩强</title>
+  <title>AI桌宠 · 韩强</title>
   <style>
     :root {
       --paper: #f3efe6;
@@ -12,6 +12,7 @@
       --line: #d9d0c3;
       --copper: #b4532a;
       --card: #fffdf8;
+      --lane: #ebe6dc;
     }
     * { box-sizing: border-box; }
     body {
@@ -51,17 +52,73 @@
       background: var(--card);
       font-size: 14px;
     }
-    .diagram { margin: 16px 0 0; }
+
+    .diagram {
+      margin: 16px 0 0;
+      padding: 16px 12px 8px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+    }
     .diagram svg { display: block; width: 100%; height: auto; }
-    .diagram figcaption { margin-top: 8px; color: var(--muted); font-size: 14px; }
-    .diagram .box { fill: var(--card); stroke: var(--copper); stroke-width: 1.6; }
+    .diagram figcaption { margin: 10px 4px 6px; color: var(--muted); font-size: 14px; }
+    .diagram .lane { fill: var(--lane); }
+    .diagram .box { fill: var(--card); stroke: var(--copper); stroke-width: 1.4; }
+    .diagram .box-fill { fill: #f7eee7; stroke: var(--copper); stroke-width: 1.4; }
+    .diagram .decision { fill: var(--card); stroke: var(--copper); stroke-width: 1.4; }
     .diagram text {
       fill: var(--ink);
       font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-      font-size: 15px;
+      font-size: 13.5px;
     }
-    .diagram .sub { fill: var(--muted); font-size: 12.5px; }
-    .diagram .arrow { stroke: var(--copper); stroke-width: 1.6; fill: none; }
+    .diagram .title { font-size: 14.5px; font-weight: 650; }
+    .diagram .sub { fill: var(--muted); font-size: 11.5px; }
+    .diagram .lane-label {
+      fill: var(--copper);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      font-weight: 650;
+    }
+    .diagram .arrow { stroke: var(--copper); stroke-width: 1.4; fill: none; }
+    .diagram .note { fill: var(--muted); font-size: 11px; }
+    .diagram .num { fill: var(--copper); }
+    .diagram .num-text { fill: #fffdf8; font-size: 11px; font-weight: 650; }
+
+    .timeline {
+      list-style: none;
+      margin: 16px 0 0;
+      padding: 0 0 0 18px;
+      border-left: 2px solid var(--line);
+    }
+    .timeline li {
+      position: relative;
+      margin: 0 0 20px;
+      padding: 0 0 0 20px;
+    }
+    .timeline li::before {
+      content: "";
+      position: absolute;
+      left: -23px;
+      top: 8px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--copper);
+    }
+    .timeline .when {
+      margin: 0;
+      color: var(--copper);
+      font-size: 13px;
+      font-weight: 650;
+      letter-spacing: 0.08em;
+    }
+    .timeline .scope {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .timeline p { margin: 4px 0 0; }
+
     video, .shot {
       display: block;
       width: 100%;
@@ -72,60 +129,82 @@
       border: 1px solid var(--line);
     }
     .boundary { margin-top: 8px; }
+    .compare { margin-top: 8px; overflow-x: auto; }
+    .compare table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+    .compare th, .compare td { border-bottom: 1px solid var(--line); padding: 10px 8px; text-align: left; vertical-align: top; }
+    .compare th { color: var(--muted); font-weight: 650; font-size: 13px; letter-spacing: 0.08em; }
+    .compare td:first-child { white-space: nowrap; font-weight: 650; }
   </style>
 </head>
 <body>
   <main>
     <p class="back"><a href="index.html">返回简历</a></p>
     <header>
-      <h1>桌宠</h1>
-      <p class="kicker">樱桃陪伴。我独自开发。</p>
+      <h1>AI桌宠</h1>
+      <p class="kicker">樱桃陪伴。我独自开发。仓库 48 次提交，2026.9.29 – 2026.10.29。</p>
       <div class="lead">
-        <p>桌面上的一只三维角色，不是纸片人。聊天、设置在一个窗口里；角色本身画在桌面壁纸那一层，能被鼠标戳、拖、甩。人设和好感会改变它怎么反应。说话走云端实时语音。要在电脑上办事时，它不自己去点屏幕，而是交给本机的办公引擎。</p>
+        <p>桌面上的一只三维角色，不是纸片人。聊天、设置在 Electron 窗口里；角色画在桌面壁纸那一层，能被鼠标戳、拖、甩。人设和好感会改它怎么反应。说话走云端实时语音。要在电脑上办事时，它不自己去点屏幕，而是交给本机的办公引擎（产品里叫派骑士）。</p>
       </div>
     </header>
 
     <section>
-      <h2>身体和人设</h2>
+      <h2>怎么叠在一起</h2>
+      <p>三层各管各的。上面是聊天和设置窗口，中间是主进程：好感、人设、语音、要不要把活交出去。底下是身体所在的壁纸宿主，以及办事时才碰到的云端语音和办公引擎。窗口和身体用本机管道说话，和交给办公引擎的那条不是同一条。</p>
       <figure class="diagram">
-        <svg viewBox="0 0 440 400" role="img">
-          <title>壳、主进程，以及角色、语音、办公引擎</title>
+        <svg viewBox="0 0 720 430" role="img" aria-labelledby="arch-title">
+          <title id="arch-title">樱桃陪伴：窗口、主进程、壁纸身体与外部依赖</title>
           <defs>
-            <marker id="p-arr" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
+            <marker id="arr" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
               <path d="M0,0 L8,4 L0,8 Z" fill="#b4532a" />
             </marker>
           </defs>
-          <rect class="box" x="50" y="12" width="340" height="72" rx="8" />
-          <text x="220" y="42" text-anchor="middle">窗口</text>
-          <text class="sub" x="220" y="64" text-anchor="middle">聊天、设置、人设</text>
-          <line class="arrow" x1="220" y1="84" x2="220" y2="112" marker-end="url(#p-arr)" />
-          <rect class="box" x="50" y="116" width="340" height="72" rx="8" />
-          <text x="220" y="146" text-anchor="middle">主进程</text>
-          <text class="sub" x="220" y="168" text-anchor="middle">好感、语音、决定要不要把活交出去</text>
-          <line class="arrow" x1="80" y1="188" x2="80" y2="228" marker-end="url(#p-arr)" />
-          <line class="arrow" x1="220" y1="188" x2="220" y2="228" marker-end="url(#p-arr)" />
-          <line class="arrow" x1="360" y1="188" x2="360" y2="228" marker-end="url(#p-arr)" />
-          <rect class="box" x="16" y="232" width="128" height="96" rx="8" />
-          <text x="80" y="266" text-anchor="middle">身体</text>
-          <text class="sub" x="80" y="290" text-anchor="middle">桌面上的三维角色</text>
-          <text class="sub" x="80" y="308" text-anchor="middle">跟着鼠标动</text>
-          <rect class="box" x="156" y="232" width="128" height="96" rx="8" />
-          <text x="220" y="266" text-anchor="middle">云端语音</text>
-          <text class="sub" x="220" y="290" text-anchor="middle">实时来回</text>
-          <text class="sub" x="220" y="308" text-anchor="middle">口型跟着说</text>
-          <rect class="box" x="296" y="232" width="128" height="96" rx="8" />
-          <text x="360" y="266" text-anchor="middle">办公引擎</text>
-          <text class="sub" x="360" y="290" text-anchor="middle">办事才交给它</text>
-          <text class="sub" x="360" y="308" text-anchor="middle">桌宠自己不点</text>
+          <rect class="lane" x="16" y="16" width="688" height="92" rx="8" />
+          <text class="lane-label" x="32" y="38">窗口 · 我写</text>
+          <rect class="box" x="32" y="50" width="656" height="44" rx="6" />
+          <text class="title" x="360" y="78" text-anchor="middle">Electron 窗口 · 聊天、设置、人设、日记、照顾</text>
+
+          <line class="arrow" x1="360" y1="108" x2="360" y2="132" marker-end="url(#arr)" />
+
+          <rect class="lane" x="16" y="136" width="688" height="150" rx="8" />
+          <text class="lane-label" x="32" y="158">主进程 · 我写</text>
+          <rect class="box-fill" x="32" y="172" width="152" height="92" rx="6" />
+          <text class="title" x="108" y="208" text-anchor="middle">好感</text>
+          <text class="sub" x="108" y="230" text-anchor="middle">等级、心情、解锁</text>
+          <rect class="box-fill" x="200" y="172" width="152" height="92" rx="6" />
+          <text class="title" x="276" y="208" text-anchor="middle">人设</text>
+          <text class="sub" x="276" y="230" text-anchor="middle">口癖、傲娇到粘人</text>
+          <rect class="box-fill" x="368" y="172" width="152" height="92" rx="6" />
+          <text class="title" x="444" y="208" text-anchor="middle">语音协调</text>
+          <text class="sub" x="444" y="230" text-anchor="middle">口型、字幕、回声</text>
+          <rect class="box-fill" x="536" y="172" width="152" height="92" rx="6" />
+          <text class="title" x="612" y="208" text-anchor="middle">交不交活</text>
+          <text class="sub" x="612" y="230" text-anchor="middle">派骑士才出去</text>
+
+          <line class="arrow" x1="108" y1="286" x2="108" y2="316" marker-end="url(#arr)" />
+          <line class="arrow" x1="444" y1="286" x2="444" y2="316" marker-end="url(#arr)" />
+          <line class="arrow" x1="612" y1="286" x2="612" y2="316" marker-end="url(#arr)" />
+
+          <rect class="lane" x="16" y="320" width="688" height="92" rx="8" />
+          <text class="lane-label" x="32" y="342">外部</text>
+          <rect class="box" x="32" y="354" width="208" height="44" rx="6" />
+          <text x="136" y="382" text-anchor="middle">壁纸宿主 · VRM 身体</text>
+          <rect class="box" x="256" y="354" width="208" height="44" rx="6" />
+          <text x="360" y="382" text-anchor="middle">云端实时语音</text>
+          <rect class="box" x="480" y="354" width="208" height="44" rx="6" />
+          <text x="584" y="382" text-anchor="middle">办公引擎 SuperAI</text>
         </svg>
-        <figcaption>身体在单独的壁纸进程里。窗口和身体之间用本机管道说话，和交给办公引擎的那条不是同一条。</figcaption>
+        <figcaption>身体挂在 Win10 图标层后的 WorkerW 上，点击能穿透到角色。办事不走这条管道，接到樱桃 AI 的引擎。</figcaption>
       </figure>
+    </section>
 
-      <h3>人设和好感</h3>
+    <section>
+      <h2>人设和好感</h2>
       <p>可以起名，写最多三条口癖，还有一根从傲娇到粘人的滑条。滑条会改身体反应：偏傲娇时，连着戳更容易不耐烦；偏粘人时，摸头更容易跳舞。</p>
-      <p>好感从 1 到 50，分成初见、熟悉、信赖、亲密、羁绊。心情另外记。戳、摸、说话、办完一件事，都会涨一点经验。到了新阶段，会多出一些动作和穿着。</p>
+      <p>好感从 1 到 50，分成初见、熟悉、信赖、亲密、羁绊。心情另外记，会慢慢往基准靠。戳、摸、说话、办完一件事，都会涨一点经验。到了新阶段，会多出一些动作和穿着。</p>
+    </section>
 
-      <h3>鼠标怎么变成动作</h3>
+    <section>
+      <h2>鼠标怎么变成动作</h2>
       <ul class="chips">
         <li>戳</li>
         <li>双击</li>
@@ -142,30 +221,61 @@
         <li>探头</li>
         <li>跳舞</li>
       </ul>
-      <p>还有几组要连续做才出现的彩蛋。安静一阵，它会自己坐下；不是一直在屏幕上乱走。设置里不能把角色放大缩小，宣传视频里的「放大」是镜头推近。</p>
+      <p>还有几组要连续做才出现的彩蛋。安静一阵，它会自己走近光标或坐下；不是一直在屏幕上乱走。设置里不能把角色放大缩小，宣传视频里的「放大」是镜头推近。</p>
       <figure class="diagram">
-        <svg viewBox="0 0 440 460" role="img">
-          <title>从鼠标到动作和好感</title>
+        <svg viewBox="0 0 720 420" role="img" aria-labelledby="poke-title">
+          <title id="poke-title">从系统鼠标到手势、动作和好感</title>
           <defs>
-            <marker id="p-arr2" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
+            <marker id="arr2" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
               <path d="M0,0 L8,4 L0,8 Z" fill="#b4532a" />
             </marker>
           </defs>
-          <rect class="box" x="50" y="12" width="340" height="68" rx="8" />
-          <text x="220" y="42" text-anchor="middle">系统鼠标</text>
-          <text class="sub" x="220" y="64" text-anchor="middle">点在角色的哪个部位、怎么动</text>
-          <line class="arrow" x1="220" y1="80" x2="220" y2="108" marker-end="url(#p-arr2)" />
-          <rect class="box" x="50" y="112" width="340" height="68" rx="8" />
-          <text x="220" y="142" text-anchor="middle">判断是哪一种手势</text>
-          <text class="sub" x="220" y="164" text-anchor="middle">戳、摸、拖、甩，各走各的</text>
-          <line class="arrow" x1="220" y1="180" x2="220" y2="208" marker-end="url(#p-arr2)" />
-          <rect class="box" x="50" y="212" width="340" height="68" rx="8" />
-          <text x="220" y="242" text-anchor="middle">角色做出对应动作</text>
-          <text class="sub" x="220" y="264" text-anchor="middle">人设会改同一下手势的反应</text>
-          <line class="arrow" x1="220" y1="280" x2="220" y2="308" marker-end="url(#p-arr2)" />
-          <rect class="box" x="50" y="312" width="340" height="68" rx="8" />
-          <text x="220" y="342" text-anchor="middle">记下这一下的好感</text>
-          <text class="sub" x="220" y="364" text-anchor="middle">和当时烦不烦是两回事</text>
+          <circle class="num" cx="48" cy="52" r="12" />
+          <text class="num-text" x="48" y="56" text-anchor="middle">1</text>
+          <rect class="box" x="68" y="24" width="220" height="56" rx="6" />
+          <text class="title" x="178" y="48" text-anchor="middle">系统鼠标</text>
+          <text class="sub" x="178" y="66" text-anchor="middle">点在角色的哪一块</text>
+
+          <line class="arrow" x1="288" y1="52" x2="348" y2="52" marker-end="url(#arr2)" />
+
+          <circle class="num" cx="372" cy="52" r="12" />
+          <text class="num-text" x="372" y="56" text-anchor="middle">2</text>
+          <rect class="box-fill" x="392" y="24" width="292" height="56" rx="6" />
+          <text class="title" x="538" y="48" text-anchor="middle">九分区命中</text>
+          <text class="sub" x="538" y="66" text-anchor="middle">头、手、身体分开认</text>
+
+          <line class="arrow" x1="360" y1="80" x2="360" y2="118" marker-end="url(#arr2)" />
+
+          <polygon class="decision" points="360,122 448,176 360,230 272,176" />
+          <text class="title" x="360" y="172" text-anchor="middle">哪一种手势</text>
+          <text class="sub" x="360" y="190" text-anchor="middle">戳 · 摸 · 拖 · 甩</text>
+          <text class="note" x="258" y="152" text-anchor="end">放下</text>
+          <text class="note" x="462" y="152">甩飞</text>
+
+          <line class="arrow" x1="272" y1="176" x2="188" y2="176" marker-end="url(#arr2)" />
+          <rect class="box" x="24" y="148" width="160" height="56" rx="6" />
+          <text class="title" x="104" y="172" text-anchor="middle">轻放 / 摔坐</text>
+          <text class="sub" x="104" y="190" text-anchor="middle">拖头手脚不当拎</text>
+
+          <line class="arrow" x1="448" y1="176" x2="524" y2="176" marker-end="url(#arr2)" />
+          <rect class="box" x="528" y="148" width="168" height="56" rx="6" />
+          <text class="title" x="612" y="172" text-anchor="middle">飞出 / 装死</text>
+          <text class="sub" x="612" y="190" text-anchor="middle">再爬起走回去</text>
+
+          <line class="arrow" x1="360" y1="230" x2="360" y2="268" marker-end="url(#arr2)" />
+
+          <circle class="num" cx="48" cy="296" r="12" />
+          <text class="num-text" x="48" y="300" text-anchor="middle">3</text>
+          <rect class="box" x="68" y="268" width="616" height="56" rx="6" />
+          <text class="title" x="376" y="292" text-anchor="middle">角色做出动作 · 性格改同一下手势的反应</text>
+          <text class="sub" x="376" y="310" text-anchor="middle">说话进行中再戳，不另开一轮</text>
+
+          <line class="arrow" x1="360" y1="324" x2="360" y2="356" marker-end="url(#arr2)" />
+
+          <circle class="num" cx="48" cy="384" r="12" />
+          <text class="num-text" x="48" y="388" text-anchor="middle">4</text>
+          <rect class="box-fill" x="68" y="356" width="616" height="48" rx="6" />
+          <text class="title" x="376" y="386" text-anchor="middle">记下这一下的好感 · 和当场烦不烦分开记</text>
         </svg>
         <figcaption>连戳会让它当场变脸。好感是慢慢涨的经验，不跟这一下的表情绑死。</figcaption>
       </figure>
@@ -175,31 +285,64 @@
       <h2>语音对话</h2>
       <p>说话走云端实时语音，不是在你电脑上离线识别。没有单独的硬件唤醒词。名字写在给模型的说明里。没在通话时，戳一下可以叫醒，短时间里不会连着叫。</p>
       <figure class="diagram">
-        <svg viewBox="0 0 440 480" role="img">
-          <title>语音从麦克风到角色，或交给办事</title>
+        <svg viewBox="0 0 720 460" role="img" aria-labelledby="voice-title">
+          <title id="voice-title">语音从麦克风到角色，或交给办事</title>
           <defs>
-            <marker id="p-arr3" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
+            <marker id="arr3" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
               <path d="M0,0 L8,4 L0,8 Z" fill="#b4532a" />
             </marker>
           </defs>
-          <rect class="box" x="50" y="12" width="340" height="68" rx="8" />
-          <text x="220" y="42" text-anchor="middle">麦克风</text>
-          <text class="sub" x="220" y="64" text-anchor="middle">太轻的底噪先拦住，少被环境声打断</text>
-          <line class="arrow" x1="220" y1="80" x2="220" y2="108" marker-end="url(#p-arr3)" />
-          <rect class="box" x="50" y="112" width="340" height="68" rx="8" />
-          <text x="220" y="142" text-anchor="middle">云端实时语音</text>
-          <text class="sub" x="220" y="164" text-anchor="middle">边听边说，带着人设和好感</text>
-          <line class="arrow" x1="220" y1="180" x2="220" y2="208" marker-end="url(#p-arr3)" />
-          <rect class="box" x="50" y="212" width="340" height="68" rx="8" />
-          <text x="220" y="242" text-anchor="middle">角色跟着出声</text>
-          <text class="sub" x="220" y="264" text-anchor="middle">口型对齐，字幕一起出</text>
-          <line class="arrow" x1="220" y1="280" x2="220" y2="308" marker-end="url(#p-arr3)" />
-          <rect class="box" x="50" y="312" width="340" height="84" rx="8" />
-          <text x="220" y="344" text-anchor="middle">接着可以做两件事</text>
-          <text class="sub" x="220" y="366" text-anchor="middle">让角色走、跳舞、现身</text>
-          <text class="sub" x="220" y="384" text-anchor="middle">或者把办事交给办公引擎</text>
+          <circle class="num" cx="48" cy="52" r="12" />
+          <text class="num-text" x="48" y="56" text-anchor="middle">1</text>
+          <rect class="box" x="68" y="24" width="220" height="56" rx="6" />
+          <text class="title" x="178" y="48" text-anchor="middle">麦克风</text>
+          <text class="sub" x="178" y="66" text-anchor="middle">太轻的底噪先拦住</text>
+
+          <line class="arrow" x1="288" y1="52" x2="348" y2="52" marker-end="url(#arr3)" />
+
+          <circle class="num" cx="372" cy="52" r="12" />
+          <text class="num-text" x="372" y="56" text-anchor="middle">2</text>
+          <rect class="box-fill" x="392" y="24" width="292" height="56" rx="6" />
+          <text class="title" x="538" y="48" text-anchor="middle">云端实时语音</text>
+          <text class="sub" x="538" y="66" text-anchor="middle">带着人设和好感 · 忽略回声</text>
+
+          <line class="arrow" x1="360" y1="80" x2="360" y2="118" marker-end="url(#arr3)" />
+
+          <circle class="num" cx="236" cy="148" r="12" />
+          <text class="num-text" x="236" y="152" text-anchor="middle">3</text>
+          <rect class="box" x="256" y="120" width="208" height="56" rx="6" />
+          <text class="title" x="360" y="144" text-anchor="middle">角色出声</text>
+          <text class="sub" x="360" y="162" text-anchor="middle">口型对齐 · 字幕跟语速</text>
+
+          <line class="arrow" x1="360" y1="176" x2="360" y2="214" marker-end="url(#arr3)" />
+
+          <polygon class="decision" points="360,218 448,272 360,326 272,272" />
+          <text class="title" x="360" y="268" text-anchor="middle">模型要工具？</text>
+          <text class="note" x="258" y="248" text-anchor="end">陪伴</text>
+          <text class="note" x="462" y="248">办事</text>
+
+          <line class="arrow" x1="272" y1="272" x2="188" y2="272" marker-end="url(#arr3)" />
+          <rect class="box" x="24" y="244" width="160" height="56" rx="6" />
+          <text class="title" x="104" y="268" text-anchor="middle">走 / 舞 / 现身</text>
+          <text class="sub" x="104" y="286" text-anchor="middle">动作做完再接话</text>
+
+          <line class="arrow" x1="448" y1="272" x2="524" y2="272" marker-end="url(#arr3)" />
+          <rect class="box-fill" x="528" y="244" width="168" height="56" rx="6" />
+          <text class="title" x="612" y="268" text-anchor="middle">派骑士</text>
+          <text class="sub" x="612" y="286" text-anchor="middle">handoff_chat_task</text>
+
+          <line class="arrow" x1="104" y1="300" x2="104" y2="396" />
+          <line class="arrow" x1="104" y1="396" x2="292" y2="396" marker-end="url(#arr3)" />
+          <line class="arrow" x1="612" y1="300" x2="612" y2="396" />
+          <line class="arrow" x1="612" y1="396" x2="516" y2="396" />
+
+          <circle class="num" cx="272" cy="396" r="12" />
+          <text class="num-text" x="272" y="400" text-anchor="middle">4</text>
+          <rect class="box" x="292" y="368" width="224" height="56" rx="6" />
+          <text class="title" x="404" y="392" text-anchor="middle">空下来再口头告诉你</text>
+          <text class="sub" x="404" y="410" text-anchor="middle">不硬插正在说的那句</text>
         </svg>
-        <figcaption>聊天输入框里的听写是另一条线，用来打字，不是桌宠这路说话。</figcaption>
+        <figcaption>聊天输入框里的听写是另一条线，用来打字，不是桌宠这路说话。线上不再引导说唤醒词。</figcaption>
       </figure>
     </section>
 
@@ -207,31 +350,155 @@
       <h2>把活交出去</h2>
       <p>你说要在电脑上办事，语音这边会交给办公助手。产品里把这一下叫派骑士。桌宠自己不去点屏幕、不跑命令。</p>
       <figure class="diagram">
-        <svg viewBox="0 0 440 460" role="img">
-          <title>语音把任务交给本机办公引擎</title>
+        <svg viewBox="0 0 720 340" role="img" aria-labelledby="knight-title">
+          <title id="knight-title">语音把任务交给本机办公引擎</title>
           <defs>
-            <marker id="p-arr4" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
+            <marker id="arr4" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
               <path d="M0,0 L8,4 L0,8 Z" fill="#b4532a" />
             </marker>
           </defs>
-          <rect class="box" x="50" y="12" width="340" height="68" rx="8" />
-          <text x="220" y="42" text-anchor="middle">你说要办事</text>
-          <text class="sub" x="220" y="64" text-anchor="middle">例如改文件、操作这台电脑</text>
-          <line class="arrow" x1="220" y1="80" x2="220" y2="108" marker-end="url(#p-arr4)" />
-          <rect class="box" x="50" y="112" width="340" height="68" rx="8" />
-          <text x="220" y="142" text-anchor="middle">语音模型决定交出去</text>
-          <text class="sub" x="220" y="164" text-anchor="middle">产品里叫派骑士</text>
-          <line class="arrow" x1="220" y1="180" x2="220" y2="208" marker-end="url(#p-arr4)" />
-          <rect class="box" x="50" y="212" width="340" height="78" rx="8" />
-          <text x="220" y="244" text-anchor="middle">本机办公引擎新开一轮</text>
-          <text class="sub" x="220" y="266" text-anchor="middle">读写、命令、点桌面，都在引擎里</text>
-          <line class="arrow" x1="220" y1="290" x2="220" y2="318" marker-end="url(#p-arr4)" />
-          <rect class="box" x="50" y="322" width="340" height="68" rx="8" />
-          <text x="220" y="352" text-anchor="middle">空下来再口头告诉你</text>
-          <text class="sub" x="220" y="374" text-anchor="middle">不在它正说话时硬插一句</text>
+          <rect class="lane" x="16" y="16" width="336" height="308" rx="8" />
+          <text class="lane-label" x="32" y="40">桌宠语音</text>
+          <rect class="lane" x="368" y="16" width="336" height="308" rx="8" />
+          <text class="lane-label" x="384" y="40">本机办公引擎</text>
+
+          <circle class="num" cx="56" cy="84" r="12" />
+          <text class="num-text" x="56" y="88" text-anchor="middle">1</text>
+          <rect class="box" x="76" y="60" width="256" height="48" rx="6" />
+          <text class="title" x="204" y="90" text-anchor="middle">你说要办事</text>
+
+          <circle class="num" cx="56" cy="156" r="12" />
+          <text class="num-text" x="56" y="160" text-anchor="middle">2</text>
+          <rect class="box-fill" x="76" y="132" width="256" height="48" rx="6" />
+          <text class="title" x="204" y="162" text-anchor="middle">handoff_chat_task</text>
+
+          <line class="arrow" x1="204" y1="108" x2="204" y2="128" marker-end="url(#arr4)" />
+          <line class="arrow" x1="332" y1="156" x2="392" y2="156" marker-end="url(#arr4)" />
+
+          <circle class="num" cx="416" cy="156" r="12" />
+          <text class="num-text" x="416" y="160" text-anchor="middle">3</text>
+          <rect class="box-fill" x="436" y="132" width="248" height="48" rx="6" />
+          <text class="title" x="560" y="162" text-anchor="middle">引擎新开一轮</text>
+
+          <circle class="num" cx="416" cy="228" r="12" />
+          <text class="num-text" x="416" y="232" text-anchor="middle">4</text>
+          <rect class="box" x="436" y="204" width="248" height="48" rx="6" />
+          <text class="title" x="560" y="234" text-anchor="middle">读写、命令、点桌面</text>
+
+          <line class="arrow" x1="560" y1="180" x2="560" y2="200" marker-end="url(#arr4)" />
+          <path class="arrow" d="M436,228 C400,228 400,280 332,280" marker-end="url(#arr4)" />
+
+          <circle class="num" cx="56" cy="292" r="12" />
+          <text class="num-text" x="56" y="296" text-anchor="middle">5</text>
+          <rect class="box" x="76" y="268" width="256" height="40" rx="6" />
+          <text class="sub" x="204" y="294" text-anchor="middle">查进度 / 停 / 接着办 · 口头回报</text>
         </svg>
-        <figcaption>也可以查进度、停掉、接着办。这些仍走同一台电脑上的办公引擎。</figcaption>
+        <figcaption>list / get / cancel / send 都对着本机办公引擎的会话。桌宠里不另开一条命令通道。</figcaption>
       </figure>
+    </section>
+
+    <section>
+      <h2>从提交记录看下来</h2>
+      <p>桌宠仓库 <code>cherryaipet</code> 从 2026 年 9 月 29 日立仓，到 10 月 29 日发到版本 2026.10.29，48 次提交，都是我写的。九月收交互和好感，十月前半月做身体和壁纸宿主，后半月做安装、更新和产品收口。</p>
+      <ul class="timeline">
+        <li>
+          <p class="when">2026.09.29</p>
+          <p class="scope">立仓</p>
+          <p>首版：Electron 桌宠、云端语音、壁纸层三维角色。之后一个月都在这条线上加深。</p>
+        </li>
+        <li>
+          <p class="when">2026.09.30</p>
+          <p class="scope">交互 · 好感</p>
+          <p>九分区命中、拖、走、反馈；戳在气泡和语音两侧语义统一。好感接到等级、心情、三条经验和解锁。自主待机、当日初见问候。照顾、日记、人设进产品；被其他窗口挡住时停止反应。</p>
+        </li>
+        <li>
+          <p class="when">2026.10.01</p>
+          <p class="scope">走 · 坐 · 被甩</p>
+          <p>走姿加减速、急刹、转身踏步，步频贴地速。补摔倒弹起、拎起晃动、可录舞蹈。坐姿换成 Mixamo，人坐在任务栏上，角色换成 cherry.vrm。多步任务改称骑士。久站自动坐下做过一次，当天因坐姿不对撤回。语音开始区分飞出、装死、爬起和走回。</p>
+        </li>
+        <li>
+          <p class="when">2026.10.02</p>
+          <p class="scope">壁纸宿主 · 身体</p>
+          <p>动作按角色骨轴重定向，避免衣服被拧。Win10 挂到 WorkerW 并穿透点击；放下分轻放和摔坐，拖头手脚不再当成拎起。说话时戳不再另开一轮，字幕送到壁纸气泡。闲着会自己走近光标、坐上任务栏；全屏回来走回去坐下。</p>
+        </li>
+        <li>
+          <p class="when">2026.10.03</p>
+          <p class="scope">性格落到身体</p>
+          <p>连戳、摸头、拥抱和待机跟着傲娇到粘人三档走。坐下和起身缓到待机，避免跳一下。脸跟着好感走，接上晚间回访、宿主音效和亲密侧坐。</p>
+        </li>
+        <li>
+          <p class="when">2026.10.04</p>
+          <p class="scope">时序 · 回声</p>
+          <p>错过的晚间回访、跨天语音、到期人设按实际发生的那天来算。形象动作做完再接话，完成回执送回语音。放音乐时只头跟着摇摆。播报没结束时忽略麦克风回声，避免自己的声音再被当成输入。</p>
+        </li>
+        <li>
+          <p class="when">2026.10.05</p>
+          <p class="scope">宣传片</p>
+          <p>接入 Remotion：分镜卡点、特效叠层与对白转录。本地素材和 BGM 不入库。</p>
+        </li>
+        <li>
+          <p class="when">2026.10.08 – 10.10</p>
+          <p class="scope">安装 · 更新</p>
+          <p>改走 electron-updater 自建 feed，隔离开机启动与通知身份。打包安装后改软件渲染，避免安装目录权限把窗口画成空白。</p>
+        </li>
+        <li>
+          <p class="when">2026.10.23</p>
+          <p class="scope">产品化</p>
+          <p>语音气泡和聊天回复按语速露字；分清人设标签与唤醒名。日记按类型给举例。对齐埋点与会员判定，修好播报被空闲超时掐断。</p>
+        </li>
+        <li>
+          <p class="when">2026.10.26 – 10.29</p>
+          <p class="scope">收口</p>
+          <p>拿掉未完成的手册和检查更新入口。开机自启立刻建计划任务并核对。去掉全局快捷键，避免和戳一戳唤醒抢键。通用设置里不再开关开机自启。录音前确认壁纸页音频上下文已起来。语音页空闲只提示点圆钮进入持续对话，不再引导说唤醒词。版本日期更新到 2026.10.29。</p>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>做过的选择</h2>
+      <div class="compare">
+        <table>
+          <thead>
+            <tr>
+              <th>日期</th>
+              <th>试过什么</th>
+              <th>后来怎么处理</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>10.01</td>
+              <td>久站后自动坐下当摆件</td>
+              <td>当天撤回。坐姿还不合适，避免自己切进去。</td>
+            </tr>
+            <tr>
+              <td>10.02</td>
+              <td>多种走姿（正式走、慢跑、冲刺、蹲走）</td>
+              <td>日常只留开心走，其余拿掉，避免衣服拧变形。</td>
+            </tr>
+            <tr>
+              <td>10.03</td>
+              <td>全屏回来播伸懒腰</td>
+              <td>去掉。害羞动作库里没有能套上桌宠的现成片段，只留手K。</td>
+            </tr>
+            <tr>
+              <td>10.08</td>
+              <td>安装目录里开 GPU 沙箱</td>
+              <td>关掉。权限不够会崩；随后安装包改软件渲染，避免窗口空白。</td>
+            </tr>
+            <tr>
+              <td>10.26</td>
+              <td>全局快捷键、设置里的开机自启开关</td>
+              <td>都拿掉。快捷键和戳抢键；自启改走核对过的计划任务，不放在通用设置里误开。</td>
+            </tr>
+            <tr>
+              <td>10.28</td>
+              <td>空闲时引导说唤醒词</td>
+              <td>改成只提示点圆钮进入持续对话。产品里没有硬件唤醒词。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <section>
