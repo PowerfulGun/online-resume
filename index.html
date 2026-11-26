@@ -49,7 +49,9 @@
       padding: 16px 16px 18px;
       box-shadow: 0 10px 24px rgba(60, 40, 20, 0.04);
     }
-    .bet:nth-child(2) { transform: translateY(10px); }
+    .timeline-list { display: none; margin: 8px 0 0; padding: 0; list-style: none; }
+    .timeline-list li { padding: 8px 0 8px 14px; border-left: 2px solid var(--line); }
+    .timeline-list time { display: block; color: var(--copper); font-size: 13px; }
     .bet h3 { margin: 0 0 8px; font-size: 16px; }
     .bet p { margin: 0; color: #3f3a34; font-size: 14.5px; }
     .boundary, .strip {
@@ -63,17 +65,20 @@
     video {
       display: block;
       width: min(100%, 760px);
+      height: auto;
+      aspect-ratio: 16 / 9;
       margin-top: 12px;
       background: #111;
       border-radius: 8px;
     }
-    .qrs { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 8px; }
+    .qrs { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 8px; align-items: flex-start; }
     .qrs figure { margin: 0; }
-    .qrs img { width: 148px; height: auto; background: #fff; border: 1px solid var(--line); }
+    .qrs img { width: min(240px, 100%); height: auto; background: #fff; border: 1px solid var(--line); }
     .qrs figcaption { letter-spacing: 0; margin-top: 6px; }
     @media (max-width: 800px) {
       .bets { grid-template-columns: 1fr; }
-      .bet:nth-child(2) { transform: none; }
+      .rail { display: none; }
+      .timeline-list { display: block; }
     }
   </style>
 </head>
@@ -85,7 +90,7 @@
       <p class="lede">2026 年 3 月从 OpenClaw 的构建产物起步，运行时后来改成自己写的。参照过多种开源运行时，取舍写在自己的代码里。</p>
       <p class="meta">南京 · 通用 Agent 框架</p>
       <ul class="contact">
-        <li><a href="tel:18805199318">18805199318</a></li>
+        <li><a href="tel:+8618805199318">18805199318</a></li>
         <li><a href="mailto:PowerfulGun@qq.com">PowerfulGun@qq.com</a></li>
         <li><a href="https://github.com/PowerfulGun">github.com/PowerfulGun</a></li>
       </ul>
@@ -95,7 +100,7 @@
       <figcaption>一条时间线</figcaption>
       <div class="rail">
         <svg viewBox="0 0 980 150" role="img" aria-label="从 OpenClaw 构建产物到自研运行时，中间做过向量记忆并放弃，桌面改由主模型直接操作，企业协作后来下线">
-          <line x1="70" y1="42" x2="910" y2="42" stroke="#d9d0c3" stroke-width="2" />
+          <line x1="70" y1="42" x2="880" y2="42" stroke="#d9d0c3" stroke-width="2" />
           <g fill="#1c1915" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" text-anchor="middle">
             <g>
               <circle cx="70" cy="42" r="6" fill="#b4532a" />
@@ -109,27 +114,35 @@
             </g>
             <g>
               <circle cx="406" cy="42" r="6" fill="#b4532a" />
-              <text x="406" y="74">04–08 月</text>
+              <text x="406" y="74">4–8月</text>
               <text x="406" y="94" fill="#6d655c">向量记忆</text>
             </g>
             <g>
               <circle cx="574" cy="42" r="6" fill="#b4532a" />
-              <text x="574" y="74">09-11</text>
+              <text x="574" y="74">9月11日</text>
               <text x="574" y="94" fill="#6d655c">改成文件记忆</text>
             </g>
             <g>
               <circle cx="742" cy="42" r="6" fill="#b4532a" />
-              <text x="742" y="74">09-14</text>
+              <text x="742" y="74">9月14日</text>
               <text x="742" y="94" fill="#6d655c">主模型点桌面</text>
             </g>
             <g>
-              <circle cx="910" cy="42" r="6" fill="#b4532a" />
-              <text x="910" y="74">11-18</text>
-              <text x="910" y="94" fill="#6d655c">协作下线</text>
+              <circle cx="880" cy="42" r="6" fill="#b4532a" />
+              <text x="880" y="74">11月18日</text>
+              <text x="880" y="94" fill="#6d655c">协作下线</text>
             </g>
           </g>
         </svg>
       </div>
+      <ol class="timeline-list">
+        <li><time>2026.03</time>OpenClaw 产物</li>
+        <li><time>随后</time>运行时自己写</li>
+        <li><time>4–8月</time>向量记忆</li>
+        <li><time>9月11日</time>改成文件记忆</li>
+        <li><time>9月14日</time>主模型点桌面</li>
+        <li><time>11月18日</time>协作下线</li>
+      </ol>
     </figure>
 
     <h2>三次押注</h2>
@@ -151,7 +164,7 @@
     <p class="boundary">动态产物不执行任意生成代码。厂商密钥不放在终端。</p>
 
     <section class="strip">
-      <h2>安全，以及一张旧证书</h2>
+      <h2>安全与 CCIE</h2>
       <p>Windows 驱动、终端采集、自保护。能跑命令、能点桌面的 Agent，约束来自做过检测的一侧。</p>
       <p>CCIE Routing and Switching #57955，2017-12-13 取得。</p>
     </section>
@@ -170,7 +183,7 @@
         <article class="work">
           <h3>桌宠</h3>
           <p>陪伴向的桌面应用。下面是一段演示。</p>
-          <video controls preload="metadata" playsinline>
+          <video controls preload="metadata" playsinline width="1280" height="720">
             <source src="media/pet-demo.mp4" type="video/mp4" />
           </video>
         </article>
