@@ -256,7 +256,7 @@
       <ul>
         <li>工具都从同一处出去：先看路径对不对、这件事能不能做，再真正执行。</li>
         <li>点桌面：主模型只说出要点的窗口和控件，报点模型补上像素坐标，再交给 Windows-MCP。不是另开一个桌面小助手去点。点了界面没变化就停。正在点的时候可以按 F9 停掉。</li>
-        <li>技能说明不会每句话都自动塞进来。先搜到，需要时再读一遍说明，然后按说明去调工具。</li>
+        <li>技能说明不会每句话都自动塞进来。先搜到，需要时再读一遍说明并绑上，然后按说明去调工具。做完或话题变了就卸绑定，安装还在。</li>
         <li>很短的命令当场等结果。跑得久的先等最多约 30 秒，超时就放到后台；做完之后，如果这轮还在，再把结果送回来。</li>
         <li>长期记住的东西写在用户电脑上的 MEMORY.md 里，不是向量库。每次开口会带上这份文件里截过的一段。只有这一轮成功做完，才写入三类：你纠正过的说法、一件可以长期记的事实、一个问题最后是怎么解决的。</li>
         <li>可以派一个只干一件事的子任务，等它做完再收回来，也可以先放在后台。要立刻停，走停止。</li>
@@ -358,6 +358,65 @@
     </section>
 
     <section>
+      <h2 id="skill">技能怎么用</h2>
+      <p>人在客户端点「立即使用」，只是在这句话前点明要用哪一个；真正绑上，还是引擎去读那份说明。模型也可以自己搜目录。全文只出现在那一次工具结果里，系统提示只记下当前绑了谁。依赖没装好也能先激活。</p>
+      <figure class="diagram">
+        <svg viewBox="0 0 720 460" role="img" aria-labelledby="sk-title">
+          <title id="sk-title">技能从发现、激活到解除绑定</title>
+          <defs>
+            <marker id="arr-sk" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#b4532a" />
+            </marker>
+          </defs>
+          <rect class="box" x="24" y="20" width="300" height="56" rx="6" />
+          <text class="title" x="174" y="44" text-anchor="middle">人点立即使用</text>
+          <text class="sub" x="174" y="62" text-anchor="middle">只点名，还不等于绑上</text>
+          <rect class="box" x="396" y="20" width="300" height="56" rx="6" />
+          <text class="title" x="546" y="44" text-anchor="middle">模型自己搜目录</text>
+          <text class="sub" x="546" y="62" text-anchor="middle">只回名称和一句描述</text>
+          <line class="arrow" x1="174" y1="76" x2="174" y2="104" />
+          <line class="arrow" x1="546" y1="76" x2="546" y2="104" />
+          <line class="arrow" x1="174" y1="104" x2="546" y2="104" />
+          <line class="arrow" x1="360" y1="104" x2="360" y2="128" marker-end="url(#arr-sk)" />
+
+          <polygon class="decision" points="360,132 456,180 360,228 264,180" />
+          <text class="title" x="360" y="176" text-anchor="middle">本机已装？</text>
+          <text class="note" x="250" y="158" text-anchor="end">没有</text>
+          <text class="note" x="470" y="158">有</text>
+
+          <line class="arrow" x1="264" y1="180" x2="140" y2="180" marker-end="url(#arr-sk)" />
+          <rect class="box" x="24" y="152" width="112" height="56" rx="6" />
+          <text class="title" x="80" y="176" text-anchor="middle">先装压缩包</text>
+          <text class="sub" x="80" y="194" text-anchor="middle">再读说明</text>
+
+          <line class="arrow" x1="456" y1="180" x2="580" y2="180" marker-end="url(#arr-sk)" />
+          <rect class="box-fill" x="548" y="152" width="148" height="56" rx="6" />
+          <text class="title" x="622" y="176" text-anchor="middle">读一遍 SKILL.md</text>
+          <text class="sub" x="622" y="194" text-anchor="middle">全文进这次结果</text>
+
+          <line class="arrow" x1="80" y1="208" x2="80" y2="236" />
+          <line class="arrow" x1="622" y1="208" x2="622" y2="236" />
+          <line class="arrow" x1="80" y1="236" x2="622" y2="236" />
+          <line class="arrow" x1="360" y1="236" x2="360" y2="248" marker-end="url(#arr-sk)" />
+
+          <rect class="box" x="168" y="248" width="384" height="56" rx="6" />
+          <text class="title" x="360" y="272" text-anchor="middle">绑成当前技能</text>
+          <text class="sub" x="360" y="290" text-anchor="middle">同一文件未改且历史还在，只回短桩；换技能直接再读，不必先卸</text>
+          <line class="arrow" x1="360" y1="304" x2="360" y2="328" marker-end="url(#arr-sk)" />
+
+          <rect class="box-fill" x="248" y="332" width="224" height="40" rx="6" />
+          <text class="title" x="360" y="358" text-anchor="middle">按说明去调工具</text>
+          <line class="arrow" x1="360" y1="372" x2="360" y2="392" marker-end="url(#arr-sk)" />
+
+          <rect class="box" x="148" y="396" width="424" height="48" rx="6" />
+          <text class="title" x="360" y="416" text-anchor="middle">做完或话题变了，解除绑定</text>
+          <text class="sub" x="360" y="434" text-anchor="middle">不删安装；重新打开会话也要再激活一次</text>
+        </svg>
+        <figcaption>工作区技能走另一条入口，不读安装目录。卸的是这一轮的运行时绑定。历史里曾经激活过，不代表现在还绑着。</figcaption>
+      </figure>
+    </section>
+
+    <section>
       <h2 id="tools">工具怎么出去</h2>
       <p>模型只提出要用哪一种能力。真正动手前，都经过同一道闸：先校正路径，再看能不能做。本机日常以放行为主；明确不允许的直接拒绝并交回模型。高风险或高成本会先问客户端，等确认期间不能插话。</p>
       <figure class="diagram">
@@ -397,6 +456,106 @@
           <text class="sub" x="636" y="118" text-anchor="middle">再问模型</text>
         </svg>
         <figcaption>闸口记账风险，但默认不靠沙箱挡一切。问人走确认或成本确认；选择题是另一条，叫 AskQuestion。</figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <h2 id="longcmd">长命令怎么转后台</h2>
+      <p>PowerShell、一次性 Python、Node 都先短等。默认大约三十秒，窗口最长六十秒。到了就当场交回；没到就放到后台，主轮还能继续问。做完之后，这一轮还在就塞进下一步再问模型；这一轮已经收口，下一轮开口时再看见。</p>
+      <figure class="diagram">
+        <svg viewBox="0 0 720 420" role="img" aria-labelledby="lc-title">
+          <title id="lc-title">短等超时后转后台，完成再送回当前轮或下一轮</title>
+          <defs>
+            <marker id="arr-lc" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#b4532a" />
+            </marker>
+          </defs>
+          <rect class="box" x="200" y="16" width="320" height="48" rx="6" />
+          <text class="title" x="360" y="46" text-anchor="middle">跑命令</text>
+          <line class="arrow" x1="360" y1="64" x2="360" y2="92" marker-end="url(#arr-lc)" />
+          <polygon class="decision" points="360,96 456,144 360,192 264,144" />
+          <text class="title" x="360" y="140" text-anchor="middle">三十秒内结束？</text>
+          <text class="note" x="250" y="122" text-anchor="end">到了</text>
+          <text class="note" x="470" y="122">没到</text>
+          <line class="arrow" x1="264" y1="144" x2="140" y2="144" marker-end="url(#arr-lc)" />
+          <rect class="box" x="16" y="116" width="120" height="56" rx="6" />
+          <text class="title" x="76" y="140" text-anchor="middle">当场交回</text>
+          <text class="sub" x="76" y="158" text-anchor="middle">再问模型</text>
+          <line class="arrow" x1="456" y1="144" x2="580" y2="144" marker-end="url(#arr-lc)" />
+          <rect class="box-fill" x="564" y="116" width="140" height="56" rx="6" />
+          <text class="title" x="634" y="140" text-anchor="middle">转到后台</text>
+          <text class="sub" x="634" y="158" text-anchor="middle">主轮可继续问</text>
+          <line class="arrow" x1="634" y1="172" x2="634" y2="200" marker-end="url(#arr-lc)" />
+          <rect class="box" x="524" y="204" width="180" height="40" rx="6" />
+          <text class="title" x="614" y="230" text-anchor="middle">可再等、查看或杀掉</text>
+          <line class="arrow" x1="614" y1="244" x2="614" y2="268" />
+          <line class="arrow" x1="614" y1="268" x2="360" y2="268" />
+          <line class="arrow" x1="360" y1="268" x2="360" y2="292" marker-end="url(#arr-lc)" />
+          <polygon class="decision" points="360,296 444,336 360,376 276,336" />
+          <text class="title" x="360" y="332" text-anchor="middle">这轮还在？</text>
+          <text class="note" x="262" y="316" text-anchor="end">还在</text>
+          <text class="note" x="458" y="316">已收口</text>
+          <line class="arrow" x1="276" y1="336" x2="140" y2="336" marker-end="url(#arr-lc)" />
+          <rect class="box-fill" x="16" y="308" width="120" height="56" rx="6" />
+          <text class="title" x="76" y="332" text-anchor="middle">注入再问</text>
+          <text class="sub" x="76" y="350" text-anchor="middle">结果进当前轮</text>
+          <line class="arrow" x1="444" y1="336" x2="580" y2="336" marker-end="url(#arr-lc)" />
+          <rect class="box" x="564" y="308" width="140" height="56" rx="6" />
+          <text class="title" x="634" y="332" text-anchor="middle">下一轮再看见</text>
+          <text class="sub" x="634" y="350" text-anchor="middle">开口时再注入</text>
+        </svg>
+        <figcaption>默认是短等后转后台。也可以一上来就后台，或短等超时直接杀掉。交互式 Python 会话始终同步，不走这条。进程总存活大约半小时封顶。</figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <h2 id="subagent">子任务怎么派</h2>
+      <p>主轮把一件独立的事派出去。默认挡住，等它做完再收回；也可以放后台，立刻拿到编号，主轮先往下走。子任务不能问你，也不能再往下派。做完会叫醒主轮：这一轮还在就塞进来；已经收口，下一轮再看见。</p>
+      <figure class="diagram">
+        <svg viewBox="0 0 720 430" role="img" aria-labelledby="sa-title">
+          <title id="sa-title">子任务同步收回或后台完成再叫醒主轮</title>
+          <defs>
+            <marker id="arr-sa" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#b4532a" />
+            </marker>
+          </defs>
+          <rect class="box" x="200" y="16" width="320" height="48" rx="6" />
+          <text class="title" x="360" y="46" text-anchor="middle">主轮拆出一件事</text>
+          <line class="arrow" x1="360" y1="64" x2="360" y2="92" marker-end="url(#arr-sa)" />
+          <polygon class="decision" points="360,96 456,144 360,192 264,144" />
+          <text class="title" x="360" y="140" text-anchor="middle">等完再收回？</text>
+          <text class="note" x="250" y="122" text-anchor="end">等</text>
+          <text class="note" x="470" y="122">放后台</text>
+          <line class="arrow" x1="264" y1="144" x2="140" y2="144" marker-end="url(#arr-sa)" />
+          <rect class="box" x="16" y="116" width="120" height="56" rx="6" />
+          <text class="title" x="76" y="140" text-anchor="middle">挡住主轮</text>
+          <text class="sub" x="76" y="158" text-anchor="middle">做完一次交回</text>
+          <line class="arrow" x1="456" y1="144" x2="580" y2="144" marker-end="url(#arr-sa)" />
+          <rect class="box-fill" x="564" y="116" width="140" height="56" rx="6" />
+          <text class="title" x="634" y="140" text-anchor="middle">立刻返回编号</text>
+          <text class="sub" x="634" y="158" text-anchor="middle">主轮可先收口</text>
+          <line class="arrow" x1="76" y1="172" x2="76" y2="208" />
+          <line class="arrow" x1="634" y1="172" x2="634" y2="208" />
+          <line class="arrow" x1="76" y1="208" x2="634" y2="208" />
+          <line class="arrow" x1="360" y1="208" x2="360" y2="228" marker-end="url(#arr-sa)" />
+          <rect class="box-fill" x="200" y="232" width="320" height="56" rx="6" />
+          <text class="title" x="360" y="256" text-anchor="middle">子任务只干这一件</text>
+          <text class="sub" x="360" y="274" text-anchor="middle">不能问人，也不能再派</text>
+          <line class="arrow" x1="360" y1="288" x2="360" y2="316" marker-end="url(#arr-sa)" />
+          <polygon class="decision" points="360,320 444,360 360,400 276,360" />
+          <text class="title" x="360" y="356" text-anchor="middle">主轮还在？</text>
+          <text class="note" x="262" y="340" text-anchor="end">还在</text>
+          <text class="note" x="458" y="340">已收口</text>
+          <line class="arrow" x1="276" y1="360" x2="140" y2="360" marker-end="url(#arr-sa)" />
+          <rect class="box" x="16" y="332" width="120" height="56" rx="6" />
+          <text class="title" x="76" y="356" text-anchor="middle">注入当前轮</text>
+          <text class="sub" x="76" y="374" text-anchor="middle">再问主模型</text>
+          <line class="arrow" x1="444" y1="360" x2="580" y2="360" marker-end="url(#arr-sa)" />
+          <rect class="box" x="564" y="332" width="140" height="56" rx="6" />
+          <text class="title" x="634" y="356" text-anchor="middle">下一轮再看见</text>
+          <text class="sub" x="634" y="374" text-anchor="middle">按这次会话叫醒</text>
+        </svg>
+        <figcaption>要立刻停，走停止或取消任务。子任务默认不写长期记忆。同一轮可以并排派几件互不抢资源的事；冲突会被拒绝。</figcaption>
       </figure>
     </section>
 
