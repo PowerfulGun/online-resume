@@ -49,6 +49,18 @@
     .lede .view { color: var(--muted); font-size: 17px; }
     .contact { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 16px 0 0; padding: 0; list-style: none; }
     .contact a { color: var(--copper); }
+    .intro-play-wrap { margin: 18px 0 0; }
+    .intro-play {
+      padding: 8px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--card);
+      color: var(--ink);
+      font: 650 14px/1.4 "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      cursor: pointer;
+    }
+    .intro-play:hover { border-color: var(--copper); color: var(--copper); }
+    .intro-play:focus-visible { outline: 2px solid var(--copper); outline-offset: 2px; }
     .edu { margin: 8px 0 0; padding: 0; list-style: none; }
     .edu li { margin: 0; }
     .cert { margin: 12px 0 0; }
@@ -103,6 +115,9 @@
       <ul class="contact">
         <li><a href="mailto:PowerfulGun@qq.com">PowerfulGun@qq.com</a></li>
       </ul>
+      <p class="intro-play-wrap">
+        <button type="button" class="intro-play" aria-pressed="false">播放自述</button>
+      </p>
       <div class="lede">
         <p class="view">AI 时代已经把知识库平权了，但知识平权不等于认知平权。还要靠创作力、社交能力、执行力、组织能力，以及推翻自己、承认无知的勇气——也就是元认知。不然会处在 AI 为自己打造的认知牢笼里。</p>
         <p>我是一个 AI Agent 程序员，在 Windows 上做能把事办完的办公助手，类似 workbuddy。</p>
