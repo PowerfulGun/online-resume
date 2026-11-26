@@ -199,6 +199,54 @@
     </section>
 
     <section>
+      <h2 id="pipe">客户端怎么跟引擎说话</h2>
+      <p>办公窗口是团队做的。跟引擎之间走 Pipe：客户端拉起一条引擎进程，标准输入输出上一行一条 JSON。同一会话必须粘在同一条进程上，不然历史、确认和记忆会对串。协议和引擎这一侧是我写的。</p>
+      <figure class="diagram">
+        <svg viewBox="0 0 720 430" role="img" aria-labelledby="pipe-title">
+          <title id="pipe-title">客户端经 Pipe 与引擎进程交互</title>
+          <defs>
+            <marker id="arr-p" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#b4532a" />
+            </marker>
+          </defs>
+          <rect class="box" x="200" y="16" width="320" height="48" rx="6" />
+          <text class="title" x="360" y="46" text-anchor="middle">客户端拉起一条引擎进程</text>
+          <line class="arrow" x1="360" y1="64" x2="360" y2="88" marker-end="url(#arr-p)" />
+          <rect class="box-fill" x="200" y="92" width="320" height="48" rx="6" />
+          <text class="title" x="360" y="122" text-anchor="middle">引擎回就绪</text>
+          <line class="arrow" x1="360" y1="140" x2="360" y2="164" marker-end="url(#arr-p)" />
+          <rect class="box" x="168" y="168" width="384" height="48" rx="6" />
+          <text class="title" x="360" y="190" text-anchor="middle">同一会话粘在这条进程</text>
+          <text class="sub" x="360" y="206" text-anchor="middle">写入一行用户话，再流式收回思考、正文、工具</text>
+          <line class="arrow" x1="360" y1="216" x2="360" y2="240" marker-end="url(#arr-p)" />
+
+          <polygon class="decision" points="360,244 456,284 360,324 264,284" />
+          <text class="title" x="360" y="280" text-anchor="middle">这一轮要等人？</text>
+          <text class="note" x="250" y="262" text-anchor="end">不用</text>
+          <text class="note" x="470" y="262">要</text>
+
+          <line class="arrow" x1="264" y1="284" x2="140" y2="284" marker-end="url(#arr-p)" />
+          <rect class="box" x="16" y="256" width="120" height="56" rx="6" />
+          <text class="title" x="76" y="280" text-anchor="middle">继续流式</text>
+          <text class="sub" x="76" y="298" text-anchor="middle">插话进当前轮</text>
+
+          <line class="arrow" x1="456" y1="284" x2="580" y2="284" marker-end="url(#arr-p)" />
+          <rect class="box-fill" x="548" y="256" width="156" height="56" rx="6" />
+          <text class="title" x="626" y="280" text-anchor="middle">客户端回一包</text>
+          <text class="sub" x="626" y="298" text-anchor="middle">确认、选择题、开浏览器</text>
+
+          <line class="arrow" x1="76" y1="312" x2="76" y2="348" />
+          <line class="arrow" x1="626" y1="312" x2="626" y2="348" />
+          <line class="arrow" x1="76" y1="348" x2="626" y2="348" />
+          <line class="arrow" x1="360" y1="348" x2="360" y2="368" marker-end="url(#arr-p)" />
+          <rect class="box" x="200" y="372" width="320" height="44" rx="6" />
+          <text class="title" x="360" y="400" text-anchor="middle">完成或出错，这一轮收口</text>
+        </svg>
+        <figcaption>插话立刻写进正在跑的这一轮，不另开一次收尾。要硬停才走停止。等确认的时候不能插话。技能安装走后台服务，不堵这条对话进程。</figcaption>
+      </figure>
+    </section>
+
+    <section>
       <h2>一轮对话</h2>
       <p>客户端把话送进来（Pipe），或直接在命令行问。引擎先记下这一轮，再带着记忆问模型。要用工具，就从同一处出去，结果交回后再问，直到不用了。代码里还有「本地步骤短路」：命中写好的步骤可以不经过模型。这条默认关着，日常对话不走。</p>
       <figure class="diagram">
