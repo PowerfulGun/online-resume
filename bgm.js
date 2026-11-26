@@ -19,8 +19,10 @@
   audio.src = "media/bgm.mp3";
   audio.loop = true;
   audio.preload = "auto";
+  audio.autoplay = true;
   audio.volume = TARGET;
   audio.setAttribute("playsinline", "");
+  audio.setAttribute("autoplay", "");
 
   var btn = document.createElement("button");
   btn.type = "button";
@@ -31,6 +33,7 @@
   var fadeToken = 0;
   var resumeTimer = 0;
   var videos = [];
+  var waitingGesture = false;
 
   function label() {
     var off = userStopped || (audio.paused && !ducked);
@@ -78,13 +81,37 @@
     requestAnimationFrame(step);
   }
 
-  function playThen(fn) {
+  function playThen(fn, onFail) {
     var p = audio.play();
     if (p && p.then) {
-      p.then(fn).catch(function () { label(); });
+      p.then(fn).catch(function () {
+        if (onFail) onFail();
+        else label();
+      });
       return;
     }
     fn();
+  }
+
+  function onFirstGesture(e) {
+    if (userStopped || !audio.paused) return;
+    if (e.target && e.target.closest && e.target.closest(".bgm-btn")) return;
+    disarmGesture();
+    playUser();
+  }
+
+  function armGesture() {
+    if (waitingGesture || userStopped) return;
+    waitingGesture = true;
+    document.addEventListener("pointerdown", onFirstGesture, true);
+    document.addEventListener("keydown", onFirstGesture, true);
+  }
+
+  function disarmGesture() {
+    if (!waitingGesture) return;
+    waitingGesture = false;
+    document.removeEventListener("pointerdown", onFirstGesture, true);
+    document.removeEventListener("keydown", onFirstGesture, true);
   }
 
   function duckForVideo() {
@@ -112,7 +139,7 @@
       if (userStopped || videoPlaying() || ducked) return;
       fadeTo(TARGET, FADE_IN_MS, label);
       label();
-    });
+    }, armGesture);
     label();
   }
 
@@ -132,12 +159,13 @@
     ducked = false;
     sessionStorage.removeItem(KEY);
     cancelResume();
+    disarmGesture();
     audio.volume = 0;
     playThen(function () {
       if (userStopped) return;
       fadeTo(TARGET, FADE_IN_MS, label);
       label();
-    });
+    }, armGesture);
     label();
   }
 
@@ -146,6 +174,7 @@
     ducked = false;
     sessionStorage.setItem(KEY, "1");
     cancelResume();
+    disarmGesture();
     fadeTo(0, 280, function () {
       if (!userStopped) return;
       audio.pause();
@@ -161,7 +190,10 @@
     else stopUser();
   });
 
-  audio.addEventListener("play", label);
+  audio.addEventListener("play", function () {
+    disarmGesture();
+    label();
+  });
   audio.addEventListener("pause", label);
 
   videos = Array.prototype.slice.call(document.querySelectorAll("video"));
@@ -183,5 +215,14 @@
   document.body.appendChild(audio);
   document.body.appendChild(btn);
   label();
-  if (!userStopped) playUser();
+  if (userStopped) {
+    audio.pause();
+    label();
+  } else {
+    playUser();
+    audio.addEventListener("canplay", function onReady() {
+      audio.removeEventListener("canplay", onReady);
+      if (!userStopped && audio.paused) playUser();
+    });
+  }
 })();
