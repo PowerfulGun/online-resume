@@ -44,12 +44,8 @@
     .aka { margin: 6px 0 0; color: var(--muted); font-size: 14px; letter-spacing: 0.12em; }
     .facts { margin: 14px 0 0; color: var(--muted); font-size: 15px; }
     .lede { margin: 22px 0 0; font-size: 18px; }
-    .lede p { margin: 0 0 12px; }
-    .lede p:last-child { margin-bottom: 0; }
-    .lede .view, .note { color: var(--muted); font-size: 17px; }
-    .note { margin: 22px 0 0; }
-    .results { margin: 14px 0 0; padding: 0; list-style: none; }
-    .results li { margin: 0 0 8px; }
+    .lede p { margin: 0; }
+    .note { margin: 22px 0 0; color: var(--muted); font-size: 17px; }
     .contact { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 16px 0 0; padding: 0; list-style: none; }
     .contact a { color: var(--copper); }
     .intro-play-wrap { margin: 18px 0 0; }
@@ -84,14 +80,32 @@
     .cert figcaption { margin-top: 8px; color: var(--muted); font-size: 14px; }
     h2 { margin: 48px 0 8px; font-size: 15px; letter-spacing: 0.16em; font-weight: 650; scroll-margin-top: 16px; }
     .work { margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--line); }
-    .work h3 { margin: 0 0 8px; font-size: 22px; font-weight: 650; }
-    .work .value { margin: 0 0 6px; font-size: 17px; }
-    .work .mine { margin: 0 0 10px; color: var(--muted); font-size: 15px; }
+    .work h3 { margin: 0 0 12px; font-size: 22px; font-weight: 650; }
     .more { margin: 0 0 12px; }
     .more a { color: var(--copper); }
     .work p { margin: 0 0 12px; }
     .work ul { margin: 0 0 14px; padding-left: 1.2em; }
     .work li { margin: 0 0 8px; }
+    .fields {
+      display: grid;
+      grid-template-columns: 5.5em 1fr;
+      column-gap: 14px;
+      row-gap: 10px;
+      margin: 0 0 12px;
+    }
+    .fields dt {
+      margin: 0;
+      color: var(--copper);
+      font-size: 13px;
+      font-weight: 650;
+    }
+    .fields dd { margin: 0; }
+    .fields dd ul { margin: 0; }
+    @media (max-width: 520px) {
+      .fields { grid-template-columns: 1fr; row-gap: 4px; }
+      .fields dt { margin-top: 8px; }
+      .fields dt:first-child { margin-top: 0; }
+    }
     video, .shot {
       display: block;
       width: 100%;
@@ -102,7 +116,6 @@
       border: 1px solid var(--line);
     }
     .extras .work h3 { font-size: 18px; }
-    .extras .work .value { font-size: 16px; }
     .qrs { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 12px; align-items: flex-start; }
     .qrs figure { margin: 0; }
     .qrs img { width: min(180px, 100%); height: auto; background: #fff; border: 1px solid var(--line); border-radius: 0; }
@@ -129,40 +142,108 @@
       <p class="intro-play-wrap">
         <button type="button" class="intro-play" aria-pressed="false">播放自述</button>
       </p>
+      <div class="lede">
+        <p>近一年在 Windows 上做办公 Agent：引擎写到生产，桌宠独立发到可安装版本。</p>
+      </div>
     </header>
 
     <section>
-      <h2 id="done">办成的事</h2>
-      <div class="lede">
-        <p>樱桃 AI 已上线生产。它是 Windows 上的办公助手：我写 Agent 引擎，一轮对话里调工具、点桌面、需要时再读技能说明，成功做完才写入长期记忆。办公主界面是同事做的。</p>
-      </div>
-      <ul class="results">
-        <li>引擎从 2026 年 3 月写起，7 月 28 日客户端开始接入。调用大模型的密钥在公司网关，不在用户电脑上。</li>
-        <li>2026 年 11 月 9 日起，对话里可以把这一轮发给局域网里的另一台电脑，由那台电脑自己的引擎跑。</li>
-        <li>AI 桌宠我独自做到可安装版本 2026.10.29。桌面上聊天；要在电脑上办事，交给同一套引擎。</li>
-        <li>进樱桃 AI 之前，8 个独立工具已在公司商店上架。上线表从 2025 年 11 月 22 日记到 2026 年 2 月 4 日，负责人是我。</li>
-      </ul>
-      <video controls preload="metadata" playsinline width="1220" height="784">
-        <source src="media/cherry-demo.mp4" type="video/mp4" />
-      </video>
-      <p class="note">AI 时代已经把知识库平权了，但知识平权不等于认知平权。还要靠创作力、社交能力、执行力，以及推翻自己、承认无知的勇气——也就是元认知。不然会处在 AI 为自己打造的认知牢笼里。</p>
+      <h2 id="recent">近一年项目</h2>
+
+      <article class="work">
+        <h3>樱桃 AI</h3>
+        <dl class="fields">
+          <dt>项目描述</dt>
+          <dd>Windows 上的办公助手：把一件事办完，而不是陪着聊。已在生产环境使用。</dd>
+          <dt>角色</dt>
+          <dd>Agent 引擎，以及局域网房间和对话里的「发给电脑」。办公主界面是同事做的。</dd>
+          <dt>技术栈</dt>
+          <dd>Windows；与 Electron 客户端用 Pipe 传 JSON；公司 LLM 网关；本机长期记忆；桌面操作。</dd>
+          <dt>职责</dt>
+          <dd>
+            <ul>
+              <li>写回合编排和统一工具出口：调工具、点桌面、需要时再读技能说明。</li>
+              <li>把调用大模型的密钥放到公司网关，不放在用户电脑上。</li>
+              <li>长期记忆改成本机一份文件，这一轮成功做完才写入。</li>
+              <li>做局域网房间和对话里的「发给电脑」：对面用自己的引擎跑。</li>
+            </ul>
+          </dd>
+          <dt>收获</dt>
+          <dd>引擎从 2026 年 3 月写起。7 月 28 日客户端开始接入，现已用于生产。11 月 9 日局域网房间和「发给电脑」上线。</dd>
+        </dl>
+        <p class="more"><a href="cherry.html">设计和流程、开发时间线</a></p>
+        <video controls preload="metadata" playsinline width="1220" height="784">
+          <source src="media/cherry-demo.mp4" type="video/mp4" />
+        </video>
+      </article>
+
+      <article class="work">
+        <h3>AI桌宠</h3>
+        <dl class="fields">
+          <dt>项目描述</dt>
+          <dd>桌面上的三维角色，能戳、能聊；真要办事，交给同一套办公引擎。已发出可安装版本 2026.10.29。</dd>
+          <dt>角色</dt>
+          <dd>独自开发。聊天在桌面上；办事交给樱桃 AI 的引擎。</dd>
+          <dt>技术栈</dt>
+          <dd>Electron；壁纸层 VRM；云端实时语音；自建更新源。</dd>
+          <dt>职责</dt>
+          <dd>
+            <ul>
+              <li>做 Electron 窗口：聊天、设置、人设、日记、照顾。</li>
+              <li>把三维身体挂在桌面壁纸那一层，能被鼠标戳、拖、甩。</li>
+              <li>接上云端实时语音；要办事时交给本机 Agent 引擎，桌宠自己不去点屏幕。</li>
+              <li>做安装、自建源更新，发到可安装版本。</li>
+            </ul>
+          </dd>
+          <dt>收获</dt>
+          <dd>仓库从 2026 年 9 月 29 日立仓，到 10 月 29 日发出可安装版本。48 次提交，都是我写的。</dd>
+        </dl>
+        <p class="more"><a href="pet.html">设计和流程、开发时间线</a></p>
+        <img class="shot" src="media/pet-ui.jpg" alt="樱桃陪伴：桌面上的人物模型和语音对话窗口" />
+        <video controls preload="metadata" playsinline width="1280" height="720">
+          <source src="media/pet-demo.mp4" type="video/mp4" />
+        </video>
+      </article>
+
+      <article class="work">
+        <h3>独立小应用</h3>
+        <dl class="fields">
+          <dt>项目描述</dt>
+          <dd>进樱桃 AI 之前，先在公司商店上架一批独立小工具：桌面壁纸、摸鱼面板、文本编译器、软件搬家、视频去场、C 盘清理、文件助手、助手日历。</dd>
+          <dt>角色</dt>
+          <dd>独自开发并上架。上线表负责人是我。</dd>
+          <dt>技术栈</dt>
+          <dd>Windows 桌面工具。</dd>
+          <dt>职责</dt>
+          <dd>独自做出这 8 个工具并上架。</dd>
+          <dt>收获</dt>
+          <dd>上线表从 2025 年 11 月 22 日记到 2026 年 2 月 4 日，8 个工具已在公司商店上架。</dd>
+        </dl>
+        <img class="shot" src="media/store-apps.png" alt="虎踞龙盘工具跟进表：上线的独立应用、时间和负责人" />
+      </article>
+
+      <article class="work">
+        <h3>Layerive</h3>
+        <dl class="fields">
+          <dt>项目描述</dt>
+          <dd>装在自己电脑上的 AI 修图：改字、换区域、抠图、外扩，都留在同一个项目里。</dd>
+          <dt>角色</dt>
+          <dd>改造与上架，不是从零写产品。</dd>
+          <dt>技术栈</dt>
+          <dd>Windows 安装与客户端改造。</dd>
+          <dt>职责</dt>
+          <dd>
+            <ul>
+              <li>做安装包。</li>
+              <li>替换界面，接入用户系统，推进上架。</li>
+            </ul>
+          </dd>
+          <dt>收获</dt>
+          <dd>完成安装包、界面替换、用户系统接入和上架。产品本身不是从零写的。</dd>
+        </dl>
+        <img class="shot" src="media/layerive.png" alt="Layerive 工作台：左侧是版本历史，中间是正在编辑的图片，右侧是项目对话" />
+      </article>
     </section>
-
-    <section>
-      <h2>教育</h2>
-      <figure class="degree">
-        <img src="media/degree.png" alt="学信网学位在线验证：韩强，南京航空航天大学计算机科学与技术工学学士，2019年10月28日" />
-      </figure>
-    </section>
-
-    <h2>作品</h2>
-
-    <article class="work">
-      <h3>樱桃 AI</h3>
-      <p class="value">Windows 上的办公助手：把一件事办完，而不是陪着聊。</p>
-      <p class="mine">我负责 Agent 引擎，以及局域网房间和对话里的「发给电脑」。办公主界面是同事做的。</p>
-      <p class="more"><a href="cherry.html">设计和流程、开发时间线</a></p>
-    </article>
 
     <section class="jobs">
       <h2>工作经历</h2>
@@ -171,9 +252,7 @@
         <h3>南京虎踞龙盘智慧科技有限公司 · Windows AI Agent 工程师</h3>
         <p class="when">2025.9 – 至今</p>
         <ul>
-          <li>Agent 引擎写到生产：回合、工具闸、桌面点击、本地长期记忆。办公主界面和同事一起做。2026 年 7 月 28 日客户端开始接入。</li>
-          <li>2026 年 11 月局域网房间和「发给电脑」上线。</li>
-          <li>2025 年 11 月到 2026 年 2 月，8 个独立工具在公司商店上架。</li>
+          <li>Agent 引擎写到生产，桌宠独立发到可安装版本；8 个商店工具和修图上架改造见上方项目。</li>
         </ul>
       </article>
 
@@ -218,33 +297,15 @@
       </article>
     </section>
 
+    <section>
+      <h2>教育</h2>
+      <figure class="degree">
+        <img src="media/degree.png" alt="学信网学位在线验证：韩强，南京航空航天大学计算机科学与技术工学学士，2019年10月28日" />
+      </figure>
+    </section>
+
     <section class="extras">
       <h2>附加</h2>
-
-      <article class="work">
-        <h3>AI桌宠</h3>
-        <p class="value">桌面上的三维角色，能戳、能聊；真要办事，交给同一套办公引擎。</p>
-        <p class="mine">我独自开发，已发出可安装版本 2026.10.29。聊天在桌面上；办事交给樱桃 AI 的引擎。</p>
-        <p class="more"><a href="pet.html">设计和流程、开发时间线</a></p>
-        <img class="shot" src="media/pet-ui.jpg" alt="樱桃陪伴：桌面上的人物模型和语音对话窗口" />
-        <video controls preload="metadata" playsinline width="1280" height="720">
-          <source src="media/pet-demo.mp4" type="video/mp4" />
-        </video>
-      </article>
-
-      <article class="work">
-        <h3>其他上架应用</h3>
-        <p class="value">进樱桃 AI 之前，先在公司商店上架一批独立小工具。</p>
-        <p class="mine">我独自做并上架：桌面壁纸、摸鱼面板、文本编译器、软件搬家、视频去场、C 盘清理、文件助手、助手日历。上线表从 2025.11.22 记到 2026.02.04。</p>
-        <img class="shot" src="media/store-apps.png" alt="虎踞龙盘工具跟进表：上线的独立应用、时间和负责人" />
-      </article>
-
-      <article class="work">
-        <h3>Layerive</h3>
-        <p class="value">装在自己电脑上的 AI 修图：改字、换区域、抠图、外扩，都留在同一个项目里。</p>
-        <p class="mine">不是从零写的。我做安装包、UI 替换、用户系统接入和上架。</p>
-        <img class="shot" src="media/layerive.png" alt="Layerive 工作台：左侧是版本历史，中间是正在编辑的图片，右侧是项目对话" />
-      </article>
 
       <article class="work">
         <h3>也能在这些地方找到我</h3>
@@ -268,6 +329,8 @@
         </figure>
       </article>
     </section>
+
+    <p class="note">AI 时代已经把知识库平权了，但知识平权不等于认知平权。还要靠创作力、社交能力、执行力，以及推翻自己、承认无知的勇气——也就是元认知。不然会处在 AI 为自己打造的认知牢笼里。</p>
   </main>
   <script src="bgm.js" defer></script>
 </body>
