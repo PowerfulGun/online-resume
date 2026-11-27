@@ -64,8 +64,15 @@
     }
     .intro-play:hover { border-color: var(--copper); color: var(--copper); }
     .intro-play:focus-visible { outline: 2px solid var(--copper); outline-offset: 2px; }
-    .edu { margin: 8px 0 0; padding: 0; list-style: none; }
-    .edu li { margin: 0; }
+    .degree { margin: 12px 0 0; }
+    .degree img {
+      display: block;
+      width: min(680px, 100%);
+      height: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
     .cert { margin: 12px 0 0; }
     .cert img {
       display: block;
@@ -143,9 +150,9 @@
 
     <section>
       <h2>教育</h2>
-      <ul class="edu">
-        <li>南京航空航天大学 · 计算机科学与技术 · 本科 · 2015 – 2019</li>
-      </ul>
+      <figure class="degree">
+        <img src="media/degree.png" alt="学信网学位在线验证：韩强，南京航空航天大学计算机科学与技术工学学士，2019年10月28日" />
+      </figure>
     </section>
 
     <h2>作品</h2>
